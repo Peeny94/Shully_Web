@@ -1,3 +1,3 @@
 // js로 html을 변경시킴
 // alert("hi");
-document.title ="Hkllo!!";
+document.title ="❤️SHULLY❤️";
