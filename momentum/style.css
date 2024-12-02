@@ -1,3 +1,17 @@
 body{
     background-color: beige;
 }
+
+h1 {
+    color: cornflowerblue;
+}
+/* class name을 정의한 것이므로 js에서 해당 css효과를 쓸 때는 정확한 철자로 입력해야 한다. */
+.clicked {
+    color: pink;
+    /* 효과가 나타날 때 천천히 발현된다. 개 cool */
+    transition: color .5s ease-in-out;
+}
+
+.cutie-font {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
