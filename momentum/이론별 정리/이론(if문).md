@@ -48,7 +48,7 @@ const calcul = {
 };// ; 와 , 를 빼먹지 않도록 주의할 것.
 //calcul.add();
 
-const Rㅣ = calcul.add(4,5);
+const R = calcul.add(4,5);
 //console.log(R);
 
 //const age = prompt("HOW"); //alret 와같이 팝업창이 뜨는데 그 아래 입력칸도 생김.

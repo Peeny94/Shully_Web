@@ -1,35 +1,26 @@
-const h1 = document.querySelector("div.hello h1");
-console.log(h1);
-//className 을 태그에서 지정해 줄 수 있다.*주의* HTML에서 class로 지정한 것을 js에서 className으로 불러온다.
-function handleTitleClick() {
-    //console.log(h1.className);//  <h1 className="tagging"> Me.</h1>
-    /*
-    1.변수값에 사용할 class name을 저장하는 것은 코드에러를 막아줄 수 있다.
-    2.class name을 추가할 땐, 띄어쓰기 후 추가해 주면 효과가 적용된다. 개꿀.
-    3.classList 
-    4. toggle
-    */
-    const clickedClass ="clicked";
-    /* 1. 기본형
-    if(h1.className == clickedClass) {
-         h1.className ="";
-    } else {
-         h1.className= clickedClass;
-    }
-    */
-    /*2. classList형
-    if(h1.classList.contains(clickedClass)) {
-        h1.classList.remove(clickedClass);//=h1.className ="";
-        
-    } else {
-        h1.classList.add(clickedClass);//=h1.className= clickedClass;
-    }
-    */
-   /*
-   3. toggle형 classList의 remove,add 기능을 한 번에 실현.
-    */
-  h1.classList.toggle("clicked");
+const loginForm =document.querySelector("#login-form");
+const loginInput =document.querySelector("#login-form input");
 
+const link = document.querySelector("a");
+
+// function onLoginBtnClick() {
+//     console.dir(loginInput);// 해당 변수에 사용되는 함수들의 목록을 볼 수 있음.
+//     alert("hello, " + loginInput.value + " Welcome");// 입력값을 가져옴=property
+//     console.log("click");
+// }
+/*
+*function onLoginSubmit(event)) {//1 argument= tomato(=>event)를 받고있다.
+*    tomato.preventDefault();
+*    //const tomato = loginInput.value;
+*    console.log(event));// tomato argument에 포함된 정보들로 여러 기능 활용할 수 있다.
+*}
+*/
+
+function onLoginSubmit(event) {
+    event.preventDefault();
+    const ursename = loginInput.value;
+    loginForm.classList.add("hiddin");
 }
 
-h1.addEventListener("click", handleTitleClick);
+
+loginForm.addEventListener("submit", onLoginSubmit) 
