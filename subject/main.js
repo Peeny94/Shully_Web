@@ -1,4 +1,4 @@
-import './styles.css';
+//import './styles.css';// html에 직접 입력함.
 
 const hello = document.querySelector('.hello div');//=#hello, #='id'or 'class'를 의미함.
 
