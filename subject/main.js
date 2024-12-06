@@ -1,31 +1,32 @@
-// <⚠️ DONT DELETE THIS ⚠️>
-//import './styles.css';
+import './styles.css';
 
-const colors = ['#1abc9c', '#3498db', '#9b59b6', '#f39c12', '#e74c3c'];
-// <⚠️ /DONT DELETE THIS ⚠️>
+const hello = document.querySelector('.hello div');//=#hello, #='id'or 'class'를 의미함.
 
-const title = document.querySelector('h2');
+const heightChange = window.innerHeight;
+const widthChange = window.innerWidth;
+/*참고
+console.log(parent.innerWidth);// 가장 가까운 프레임셋의 뷰포트의 너비를 기록합니다.
+console.log(top.innerWidth);// 가장 먼 프레임셋의 뷰포트의 너비를 기록합니다.
+onresized
+onload
 
-const superEventHandler = {
-  Mouseover: function () {
-    title.innerText = 'Mouse In';
-    title.style.color = colors[3];
-  },
-  Mouseout: function () {
-    title.innerText = 'Mouse Out';
-    title.style.color = colors[2];
-  },
-  resized: function () {
-    title.innerText = 'Resized';
-    title.style.color = colors[1];
-  },
-  MouseRightclicked: function (event) {
-    title.innerText = 'Mouse Right Clicked';
-    title.style.color = colors[0];
-  },
-};
+*/
+console.log(window.frames);
+console.log(window);
+const superHadeler = {
+  resizedCalcul: function(e) {
+    e.preventDefault();
+    if (heightChange==window.outerHeight){
+      document.body.style.backgroundColor = 'purple';
+    }
 
-title.addEventListener('mouseenter', superEventHandler.Mouseover);
-title.addEventListener('mouseleave', superEventHandler.Mouseout);
-window.addEventListener('resize', superEventHandler.resized);
-window.addEventListener('contextmenu', superEventHandler.MouseRightclicked);
+  },
+  windowResized: function(){
+    document.body.style.backgroundColor = 'tomato';
+    
+  } 
+}
+
+console.log(window.frames.innerHeight, window.frames.innerWidth);
+window.addEventListener('load', superHadeler.resizedCalcul);
+window.addEventListener('resize', superHadeler.windowResized);

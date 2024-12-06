@@ -22,6 +22,7 @@ const greeting = document.querySelector("#greeting");
 //2. form className을 추가함. -> form이 실행됨 -> form이 사라짐.
 //3. h1 태그의 className을 바꿔줌
 const HIDDEN_CLASSNAME = "hidden"; //하나의 관습으로 중요하지 않은 정보지만 중복사용되기 때문에 대문자로 변수값을 지정.
+
 const USERNAME_KEY = "username";
 
 function onLoginSubmit(event) {
