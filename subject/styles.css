@@ -1,19 +1,19 @@
 body {
   font-family: sans-serif;
-  background-color: orange;
+  background-color: rgb(242, 241, 238);
 }
 
 .windowLarge {
   background-color: rgb(132, 0, 255);
-  transition: color 0.5s ease-in-out;
+ 
 }
 
 .windowMiddle {
   background-color: rgb(229, 255, 0);
-  transition: color 0.5s ease-in-out;
+ 
 }
 
 .windowSmall {
   background-color: rgb(255, 0, 0);
-  transition: color 0.5s ease-in-out;
+ 
 }
