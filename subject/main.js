@@ -48,7 +48,7 @@ const superHadeler = {
     }
   },
 };
-
+console.log(document.getElementsByClassName(".click"))
 superHadeler.windowResized();
 window.addEventListener('resize', superHadeler.windowResized);
 
