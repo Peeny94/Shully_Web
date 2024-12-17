@@ -1,7 +1,7 @@
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useState } from "react";
 import {styled} from "styled-components";
 import { auth } from "../firebase";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 const Wrapper =styled.div`
@@ -76,11 +76,11 @@ export default function CreateAccount(){
                 email,
                 password
             );
-            console.lod(credentials.user);
-            await updateProfile(credentials.user, {
-                displayName: name,
-            });
-            navigate("/");
+            console.log(credentials.user);
+                await updateProfile(credentials.user, {
+                    displayName: name,
+                });
+                navigate("/");
         } catch(e){
            //setError
         } finally {
@@ -90,7 +90,7 @@ export default function CreateAccount(){
     }
     return( 
     <Wrapper>
-        <Title>Login into SHULLY</Title>
+        <Title>Join SHULLY</Title>
         <Form onSubmit ={onSubmit}>
             <Input onChange={onChange} name="name" value = {name} placeholder="Name" type= "text" required/>
             <Input onChange={onChange} name="email" value = {email} placeholder="Email" type= "email" required/>
