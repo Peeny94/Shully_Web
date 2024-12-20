@@ -1,9 +1,8 @@
 import { styled } from "styled-components";
 import { auth } from "../firebase";
+import { GithubAuthProvider, signInWithPopup } from "firebase/auth"
 import { useNavigate } from "react-router-dom";
 import cloudelogo from "../imgs/cloude.svg";
-import cursor from "../imgs/cursor.svg";
-import React from "react";
 
 const Botton =styled.span`
     margin-top: 20px;
@@ -29,8 +28,16 @@ const Log = styled.img`
     height: 25px;
 `; 
 export default function GithubBotton() {
+    const onClick = async() => {
+        try{
+            const provider = new GithubAuthProvider();
+            await signInWithPopup(auth, provider);
+        } catch(error) {
+            console.error(error);
+        }
+    };
     return (
-        <Botton>
+        <Botton onClick={onClick}>
             <Log src={cloudelogo}/>
             Continue with Github
         </Botton>
