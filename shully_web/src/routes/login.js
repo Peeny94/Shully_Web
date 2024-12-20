@@ -25,10 +25,9 @@ const Button = styled.button`
   font-size: 16px;
   width: 71.5%;
   cursor: pointer;
-  
-  &:hover {
+    &:hover {
+    opacity: 0.8;
     border-color: rgb(191, 169, 88); /* 호버 시 변경 */
-  }
 `;
 
 const Input = styled.input`
@@ -46,13 +45,14 @@ const Input = styled.input`
         &:hover {
         opacity: 0.8;
         }
+    display: flex;
     }
 `;
 
 const Title = styled.h1`
     font-size: 42px;
     text-align: justify;
-    color: rgb(157, 217, 217);
+    color: rgb(147, 117, 117);
     position: relative;; 
     left: -3.5%;
 `;

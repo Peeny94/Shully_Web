@@ -1,3 +1,5 @@
+// 언젠가 커서 커스터마이징. 아이원튜. 베베.
+
 import { styled } from "styled-components";
 import cursor from "../imgs/cursor.svg";
 import { styled } from "styled-components";
@@ -29,7 +31,6 @@ export default function Cursor() {
     return (
         <Botton>
         <Log src={cloudelogo}/>
-        Continue with Guthub
     </Botton>
     );
 }
