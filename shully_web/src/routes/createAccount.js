@@ -3,7 +3,10 @@ import { useState } from "react";
 import {styled} from "styled-components";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
-
+import { FirebaseError } from "firebase/app";
+const errors = {
+    "auth/email-already-in-use": "That email already exists."
+}
 const Wrapper =styled.div`
     height: 100%;
     display: flex;
@@ -13,6 +16,7 @@ const Wrapper =styled.div`
 `;
 const Form = styled.form`
     margin-top: 50px;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -67,6 +71,7 @@ export default function CreateAccount(){
     };
     const onSubmit = async(e : React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setErr("");
         //1. create an account 2. set the name of the user 3. redirect to the 'home'- todo list 
         if(isLoading ||name===""|| email ==="" || password==="") return;
         try {
@@ -83,6 +88,11 @@ export default function CreateAccount(){
                 navigate("/");
         } catch(e){
            //setError
+           if(e instanceof FirebaseError){
+            console.log(e.code, e.maeeage)
+            setErr(e.message); 
+            alert(`'이미 존재하는 계정입니다.'`);
+           }
         } finally {
             setLoading(false);
         }
@@ -97,7 +107,8 @@ export default function CreateAccount(){
             <Input onChange={onChange} name="password" value = {password} placeholder="Password" type= "password" required/>
             <Input type="submit" value={isLoading? "Loading.." : "Create Account"}/>
         </Form>
-        {err !== ""? <Error>{err}</Error> : null}
+        {/* 상기의 setErr 에 값을 세팅해서 err 메세지를 띄운다.*/}
+       {err !== ""? <Error> <p>{err}</p></Error> : null}
     </Wrapper>
     );
 }

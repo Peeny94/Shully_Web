@@ -10,8 +10,7 @@ body {
 .Wrapper {
     height: 100vh;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
 }
 .Text {
     font-size: 24px;
@@ -27,10 +26,12 @@ body {
 
 .Title {
     font-size:  42px;
+    display: flex;
 }
 
 .Form {
     margin-top:  50px;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -55,3 +56,4 @@ body {
 .background-image{
     background-image:url("./cursor.png");
 }
+
