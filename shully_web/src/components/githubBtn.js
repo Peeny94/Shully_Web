@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { auth } from "../firebase";
-import { GithubAuthProvider, signInWithPopup } from "firebase/auth"
-import { useNavigate } from "react-router-dom";
+import { GithubAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth"
+import {useNavigate } from "react-router-dom";
 import cloudelogo from "../imgs/cloude.svg";
 
 const Botton =styled.span`
@@ -28,10 +28,16 @@ const Log = styled.img`
     height: 25px;
 `; 
 export default function GithubBotton() {
+    const navigate = useNavigate();
     const onClick = async() => {
         try{
             const provider = new GithubAuthProvider();
-            await signInWithPopup(auth, provider);
+            //2가지 방식으로 깃허브 로그인 기능 실행.
+            //-> 1. popup, 2. redirection
+            //await signInWithRedirect(auth,provider);
+            await signInWithPopup(auth, provider); 
+            //FirebaseError: Firebase: Error (auth/cancelled-popup-request).
+            navigate("/");
         } catch(error) {
             console.error(error);
         }
