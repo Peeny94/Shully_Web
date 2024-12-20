@@ -10,7 +10,7 @@ import CreateAccount from "./routes/createAccount";
 import Login from "./routes/login";
 import { createGlobalStyle, styled } from "styled-components";
 import reset from "styled-reset";
-import { useEffect } from 'react';
+import { useEffect } from 'react'; 
 import LoadingScreen from './components/loadingScreen';
 
 const router = createBrowserRouter([
