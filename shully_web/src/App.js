@@ -1,4 +1,4 @@
-// import './App.css';
+import './App.css';
 import { setTimeout } from "react";
 import {auth} from "./firebase";
 import React, { useState } from "react";
@@ -46,6 +46,7 @@ const router = createBrowserRouter([
 const GlobalStyles = createGlobalStyle`
   ${reset};
   *{
+    
     box-sizing: border-box;
   }
   body {
@@ -72,7 +73,7 @@ function App() {
     init();
   },[]);
   return (
-    <Wrapper>
+    <Wrapper className="App">
       <GlobalStyles/>
       {isLoding? <LoadingScreen/> :  <RouterProvider router={router}/>}
     </Wrapper>

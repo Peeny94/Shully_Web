@@ -5,12 +5,14 @@ import { Link,useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import { FirebaseError } from "firebase/app";
 import { signInWithEmailAndPassword } from "firebase/auth";
-const errors = {
-    "auth/email-already-in-use": "That email already exists."}
-const signIn = () => {
-    return <Navigate to="/createAccount"
-    />;
-};
+import {
+    Form,
+    Error,
+    Switcher,
+    Wrapper,
+  } from "../components/authComponents";
+import GithubBotton from "../components/githubBtn";
+
 
 const Button = styled.button`
 // all: unset; /* 기본 스타일 제거 */
@@ -23,28 +25,12 @@ const Button = styled.button`
   font-size: 16px;
   width: 71.5%;
   cursor: pointer;
-
+  
   &:hover {
     border-color: rgb(191, 169, 88); /* 호버 시 변경 */
   }
-  }
 `;
-const Wrapper =styled.div`
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    width: 420px;
-    padding:50px 0px; 
-`;
-const Form = styled.form`
-    margin-top: 50px;
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100px;
-    
-`;
+
 const Input = styled.input`
     padding: 10px 20px;
     border-radius: 50px;
@@ -56,27 +42,23 @@ const Input = styled.input`
     outline-color: rgb(191, 169, 88);
     font-size:16px;
     &[type="submit"] {
-        cursor:url("cursor.cur") 2 2, 
-        url("cursor.png") 2 2, 
-        pointer;
+        cursor:pointer;
         &:hover {
         opacity: 0.8;
         }
     }
-`; 
+`;
+
 const Title = styled.h1`
     font-size: 42px;
     text-align: justify;
     color: rgb(157, 217, 217);
     position: relative;; 
-    left: 3.5%;
+    left: -3.5%;
 `;
-const Error = styled.span`
-    font-weight:600;
-    color: tomato;
-    
-`;
-export default function CreateAccount(){
+
+//react component 명명은 대문자로 시작!
+export default function LoginAccount(){
     const navigate = useNavigate();
     const [isLoading, setLoading] = useState(false);
     const [email, setEmail] = useState("");
@@ -95,7 +77,6 @@ export default function CreateAccount(){
     const onSubmit = async(e : React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setErr("");
-        //1. create an account 2. set the name of the user 3. redirect to the 'home'- todo list 
         if(isLoading || email ==="" || password==="") return;
         try {
             setLoading(true);
@@ -104,7 +85,7 @@ export default function CreateAccount(){
         } catch(e){
            //setError
            if(e instanceof FirebaseError){
-            console.log(e.code, e.maeeage)
+            console.log(e.code, e.massage)
             setErr(e.message); 
            }
         } finally {
@@ -114,15 +95,19 @@ export default function CreateAccount(){
     }
     return( 
      <Wrapper>
-        <Title>Login SHULLY</Title>      
+        <Title>Login into SHULLY</Title>      
         <Form onSubmit ={onSubmit}>
             <Input onChange={onChange} name="email" value = {email} placeholder="Email" type= "email" required/>
             <Input onChange={onChange} name="password" value = {password} placeholder="Password" type= "password" required/>
-            <Input type="submit" value={isLoading? "Loading.." : "Log in"}/>           
+            <Input type="submit"  value={isLoading? "Loading.." : "Log in"}/>           
         </Form>
         <Button onClick={() => navigate("/createAccount")}>Join into Shully</Button>
         {/* 상기의 setErr 에 값을 세팅해서 err 메세지를 띄운다.*/}
        {err !== ""? <Error> {err}</Error> : null}
+       {/* <Switcher>
+        <Link to="/createAccount">Create one &rarr;</Link>
+       </Switcher> */}
+       <GithubBotton/>
     </Wrapper>
     );
 }

@@ -2,54 +2,20 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useState } from "react";
 import {styled} from "styled-components";
 import { auth } from "../firebase";
-import { useNavigate } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { FirebaseError } from "firebase/app";
+import {
+    Form,
+    Error,
+    Input,
+    Switcher,
+    Title,
+    Wrapper,
+  } from "../components/authComponents";
 const errors = {
     "auth/email-already-in-use": "That email already exists."
 }
-const Wrapper =styled.div`
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    width: 420px;
-    padding:50px 0px; 
-`;
-const Form = styled.form`
-    margin-top: 50px;
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100px;
-    
-`;
-const Input = styled.input`
-    padding: 10px 20px;
-    border-radius: 50px;
-    border: rgb(33, 83, 83);
-    background-size: cover;
-    background-color: rgb(157, 217, 217);
-    // background-image:url("cloud.jpg");
-    width: 300%; //강의와 다른 설정 (<-100)
-    outline-color: rgb(191, 169, 88);
-    font-size:16px;
-    &[type="submit"] {
-        cursor:url("cursor.cur") 2 2, 
-        url("cursor.png") 2 2, 
-        pointer;
-        &:hover {
-        opacity: 0.8;
-        }
-    }
-`; 
-const Title = styled.h1`
-    font-size:  42px;
-    
-`;
-const Error = styled.span`
-    font-weight:600;
-    color: tomato;
-`;
+
 export default function CreateAccount(){
     const navigate = useNavigate();
     const [isLoading, setLoading] = useState(false);
@@ -109,6 +75,10 @@ export default function CreateAccount(){
         </Form>
         {/* 상기의 setErr 에 값을 세팅해서 err 메세지를 띄운다.*/}
        {err !== ""? <Error> <p>{err}</p></Error> : null}
+       <Switcher>
+        Already have an account?
+        <Link to="/login"> Log in &rarr;</Link>
+       </Switcher>
     </Wrapper>
     );
 }
