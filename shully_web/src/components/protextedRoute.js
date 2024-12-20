@@ -6,9 +6,10 @@ export default function ProtectedRoute({
 }: {
     children: React.ReactNode;  
 }) {
-    const user = auth.currentUser
+    const user = auth.currentUser;
     if(user===null){
-        return <Navigate to="/login"/>;
+        return <Navigate to="/login"
+        />;
     }
     //';' 선언을 잊으면 error 뜸. 주의%
     return children;

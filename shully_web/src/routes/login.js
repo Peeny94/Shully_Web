@@ -1,12 +1,34 @@
 import { useState } from "react";
 import {styled} from "styled-components";
 import { auth } from "../firebase";
-import { useNavigate } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { FirebaseError } from "firebase/app";
 import { signInWithEmailAndPassword } from "firebase/auth";
 const errors = {
-    "auth/email-already-in-use": "That email already exists."
-}
+    "auth/email-already-in-use": "That email already exists."}
+const signIn = () => {
+    return <Navigate to="/createAccount"
+    />;
+};
+
+const Button = styled.button`
+// all: unset; /* 기본 스타일 제거 */
+  display: inline-block; /* 레이아웃 정렬 */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 50px;
+  background-color: rgb(157, 217, 217);
+  outline-color: rgb(191, 169, 88);
+  font-size: 16px;
+  width: 71.5%;
+  cursor: pointer;
+
+  &:hover {
+    border-color: rgb(191, 169, 88); /* 호버 시 변경 */
+  }
+  }
+`;
 const Wrapper =styled.div`
     height: 100%;
     display: flex;
@@ -84,25 +106,23 @@ export default function CreateAccount(){
            if(e instanceof FirebaseError){
             console.log(e.code, e.maeeage)
             setErr(e.message); 
-            alert(`'이미 존재하는 계정입니다.'`); 
            }
         } finally {
             setLoading(false);
         }
-        console.log( email, password);
+        console.log(email, password);
     }
     return( 
-
-    
-    <Wrapper>
+     <Wrapper>
         <Title>Login SHULLY</Title>      
         <Form onSubmit ={onSubmit}>
             <Input onChange={onChange} name="email" value = {email} placeholder="Email" type= "email" required/>
             <Input onChange={onChange} name="password" value = {password} placeholder="Password" type= "password" required/>
-            <Input type="submit" value={isLoading? "Loading.." : "Log in"}/>
+            <Input type="submit" value={isLoading? "Loading.." : "Log in"}/>           
         </Form>
+        <Button onClick={() => navigate("/createAccount")}>Join into Shully</Button>
         {/* 상기의 setErr 에 값을 세팅해서 err 메세지를 띄운다.*/}
-       {err !== ""? <Error> <p>{err}</p></Error> : null}
+       {err !== ""? <Error> {err}</Error> : null}
     </Wrapper>
     );
 }

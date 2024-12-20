@@ -12,7 +12,7 @@ import { createGlobalStyle, styled } from "styled-components";
 import reset from "styled-reset";
 import { useEffect } from 'react'; 
 import LoadingScreen from './components/loadingScreen';
-import ProtectedRoute from "./routes/protextedRoute";
+import ProtectedRoute from "./components/protextedRoute";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +20,8 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <Layout/>
-      </ProtectedRoute>),
+      </ProtectedRoute>
+      ),
     children:[
       {
         path:"",
