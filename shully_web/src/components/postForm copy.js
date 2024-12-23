@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { auth, db, storage } from "../firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { addDoc, collection, updateDoc } from "firebase/firestore";
 import {styled} from "styled-components";
 import { PostFormWrapper, PostTextArea, PostSubmitBtn, AttachFileButton, AttachFileInput} from "./auth-Components";
 
@@ -6,21 +9,56 @@ import { PostFormWrapper, PostTextArea, PostSubmitBtn, AttachFileButton, AttachF
 export default function PostForm(){
     const [isLoading, setLoading] = useState(false);
     const[shully, setShully] = useState("");
-    const[file, setFile] = useState<File| null>(null);
+    // const [file, setFile] = useState<File | null>(null); // 해당코드를 바꿔줬다. 
+    const[file, setFile] = useState(null);
     const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setShully(e.target.value || "");// 문자열 아니면 공백
     };
-    // const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     const { files } = e.target;
-    //     if (files && files.length === 1) {
-    //       setFile(files[0]);
-    //     }
-    //     console.log("shully:", shully);
-    //     console.log("file:", file);
-    // };
+    const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { files } = e.target;
+        if (files && files.length === 1) {
+          setFile(files[0]);
+        } else{
+            setFile(null);// 파일을 저장 하거나, 또는 빈 배열 값이 저장되도록 오류방지.
+        }
+
+    };
+// db 생성 코드 설정
+    const onSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const user = auth.currentUser;
+        if(!user ||isLoading|| shully==="" || shully.length>180) return;
+
+        try{
+            setLoading(true);
+            //게시물을 하나의 변수로 명명
+           const doc = await addDoc(collection(db, "shullys"),{
+                shully,
+                createdAt: Date.now(),
+                username: user.displayName || "Anonymous",
+                userid: user.uid,
+            });
+            if(file){
+                const locationRef = ref(
+                    storage,`shullys/${user.uid}-${user.displayName}/${doc.id}`
+                );
+                const result = await uploadBytes(locationRef, file);
+                const url = await getDownloadURL(result.ref);
+                    await updateDoc(doc, {
+                        photo: url,
+                    });
+                }
+                    setShully("");
+                    setFile(null);
+                }catch(e){
+                    console.log(e);
+                } finally{
+                    setLoading(false);
+                }
+         };
     return (
-    <PostFormWrapper>
-        <PostTextArea rows={5} maxLength={180} value={shully} onChange={onChange} placeholder="What is happening?"/>
+    <PostFormWrapper onSubmit={onSubmit}>
+        <PostTextArea required rows={5} maxLength={180} value={shully} onChange={onChange}placeholder="What is happening?"/>
 {/* file이란 id를 가진 value를 input 함 */}
         <AttachFileButton htmlFor="file">
         {file ? "Photo added ✅" : "Add photo"}
@@ -30,9 +68,7 @@ export default function PostForm(){
             */}     
         <AttachFileInput onChange={onFileChange} type="file" id="file" accept="image/*"/>
 
-            <PostSubmitBtn type= "submit" value={isLoading? "Posting..." : "Post shully"}>
-
-            </PostSubmitBtn>
+            <PostSubmitBtn type= "submit" value={isLoading ? "Posting..." : "Post Shully"}></PostSubmitBtn>
 
     </PostFormWrapper>
     )

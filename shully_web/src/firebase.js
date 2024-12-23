@@ -1,6 +1,8 @@
 import { initializeApp } from "firebase/app";
 // Import the functions you need from the SDKs you need
 import {getAuth} from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -16,3 +18,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 //app 인증 서비스에 대한 링크를 가져올 수 있다. 초간단하다고 한다. 
 export const auth = getAuth(app);
+//db 설정
+export const storage = getStorage(app);
+export const db = getFirestore(app);
