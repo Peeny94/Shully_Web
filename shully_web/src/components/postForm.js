@@ -12,13 +12,13 @@ const TextArea = styled.textarea`
     padding: 20px;
     border-radius: 20px;
     font-size: 16px;
-    color: whitesmoke;
+    color: black;
     background-color: antiquewhite;
     width: 100%;
     resize:none;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     &::placeholder{
-        font-size: 1;
+        font-size: 16px;
     }
     &:focus {
         outline: none;
@@ -53,17 +53,29 @@ const SubmitBtn = styled.input`
 `;
 
 export default function PostForm(){
-
+    const [isLoading, setLoading] = useState(false);
+    const[shully, setShully] = useState("");
+    const[file, setFile] = useState<File| null>(null);
+    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setShully(e.target.value || "");// 문자열 아니면 공백
+    };
+    const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {files} = e.target;
+        if(files && files.length === 1) {
+            setFile(files[0]);
+        } else {
+            setFile(null);//값이 없으면, 빈 값을 정의.
+        }
+    };
     return (
     <Form>
-        <TextArea placeholder="What is happening?"/>
+        <TextArea value={shully} onChange={onChange} placeholder="What is happening?"/>
         {/* file이란 id를 가진 value를 input 함 */}
-        <AttachFileButton htmlFor="file">Add photo</AttachFileButton>
         {/* accept: image 파일만 허용. 확장자 제한 X 
             type: file 업로드 할 수 있는 btn 으로 바뀜
-        */}
-        <AttachFileInput type="file" id="file" accept="image/*"/>
-        <SubmitBtn type= "submit" value="Post shully"/>
+            */}
+        <AttachFileInput onChange={onFileChange} type="file" id="file" accept="image/*"/>
+        <SubmitBtn type= "submit" value={isLoading? "Posting..." : "Post shully"}/>
     </Form>
     );
 }

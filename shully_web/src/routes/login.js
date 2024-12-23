@@ -10,7 +10,7 @@ import {
     Error,
     Switcher,
     Wrapper,
-  } from "../components/authComponents";
+  } from "../components/auth-Components";
 import GithubBotton from "../components/githubBtn";
 
 

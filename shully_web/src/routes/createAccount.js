@@ -11,7 +11,7 @@ import {
     Switcher,
     Title,
     Wrapper,
-  } from "../components/authComponents";
+  } from "../components/auth-Components";
 import GithubBotton from "../components/githubBtn";
 const errors = {
     "auth/email-already-in-use": "That email already exists."
