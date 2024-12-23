@@ -16,6 +16,7 @@ export default function PostForm(){
     };
     const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { files } = e.target;
+        //퉷
         if (files && files.length === 1) {
           setFile(files[0]);
         } else{
