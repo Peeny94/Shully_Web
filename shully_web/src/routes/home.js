@@ -16,8 +16,8 @@ export default function Home() {
         
     return (
         <Wrapper>
-        <button onClick={logOut}>logout</button> 
-        <PostForm/>
+            <button onClick={logOut}>logout</button> 
+            <PostForm/>
         </Wrapper>
     );
 }
