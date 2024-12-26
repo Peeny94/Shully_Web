@@ -36,5 +36,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://localhost:3000"
+  "proxy": ["https://shully-f95f5.firebaseapp.com",
+            "http://localhost:3000/"]
+
 } 

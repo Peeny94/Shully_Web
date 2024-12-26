@@ -17,11 +17,16 @@ export default function PostForm(){
     const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { files } = e.target; 
         if (files && files.length === 1) {
-          setFile(files[0]);
-        } else{
-            setFile(null);// 파일을 저장 하거나, 또는 빈 배열 값이 저장되도록 오류방지.
+            // 타입 검증을 위에서 코드를 바꿔줬어서. 만일의 경우로 File 검증을 시도해서 저장.
+            if (files[0] instanceof File) {
+                setFile(files[0]); // 올바른 File 객체만 상태에 저장
+            } else {
+                console.error("Invalid file type provided");
+                setFile(null);
+            }
+        } else {
+            setFile(null); // 파일이 없거나 배열이 비어 있는 경우
         }
-
     };
 // db 생성 코드 설정
     const onSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
@@ -38,23 +43,27 @@ export default function PostForm(){
                 username: user.displayName || "Anonymous",
                 userid: user.uid,
             });
+            //파일이 있을경우 파일을 추가하는 코드.
             if(file){
+                //저장하는 url 경로, 해당 경로는 죄가 없다.
                 const locationRef = ref(
                     storage,`shullys/${user.uid}-${user.displayName}/${doc.id}`
                 );
-                console.log("1");
-                await uploadBytes(locationRef, file);                   
-                }
+                await uploadBytes(locationRef, file).then((snapshot) => {
+                    console.log("upload complete");
+                });
+                const fileURL = await getDownloadURL(locationRef);
+                
+                //fireDB에 파일 url 을 임의로 추가. json 형태로 item 명만 입력해 주는 듯.
+                await updateDoc(doc.ref, {fileURL,});
+            }
                 setShully("");
                 setFile(null);
-                console.log("2");// 여기를 못 옴.
                 }catch(e){
-                    console.log(e);
-                    console.log("0");
+                    console.log("posting err why: ",e);              
                 } finally{
                     setLoading(false);
                 }
-                console.log("fin");
          };
     return (
     <PostFormWrapper onSubmit={onSubmit}>
