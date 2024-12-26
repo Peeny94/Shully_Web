@@ -15,8 +15,7 @@ export default function PostForm(){
         setShully(e.target.value || "");// 문자열 아니면 공백
     };
     const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { files } = e.target;
-        //퉷
+        const { files } = e.target; 
         if (files && files.length === 1) {
           setFile(files[0]);
         } else{
@@ -43,24 +42,25 @@ export default function PostForm(){
                 const locationRef = ref(
                     storage,`shullys/${user.uid}-${user.displayName}/${doc.id}`
                 );
-                const result = await uploadBytes(locationRef, file);
-                const url = await getDownloadURL(result.ref);
-                    await updateDoc(doc, {
-                        photo: url,
-                    });
+                console.log("1");
+                await uploadBytes(locationRef, file);                   
                 }
-                    setShully("");
-                    setFile(null);
+                setShully("");
+                setFile(null);
+                console.log("2");// 여기를 못 옴.
                 }catch(e){
                     console.log(e);
+                    console.log("0");
                 } finally{
                     setLoading(false);
                 }
+                console.log("fin");
          };
     return (
     <PostFormWrapper onSubmit={onSubmit}>
         <PostTextArea required rows={5} maxLength={180} value={shully} onChange={onChange}placeholder="What is happening?"/>
 {/* file이란 id를 가진 value를 input 함 */}
+{/* htmlFor를 AttachFileInput의 id로 설정했기에 AttachFileButton을 클릭해도 AttachFileInput의 기능을 한다. */}
         <AttachFileButton htmlFor="file">
         {file ? "Photo added ✅" : "Add photo"}
         </AttachFileButton>
