@@ -2,8 +2,8 @@ import { auth } from "../firebase";
 import {styled} from "styled-components";
 import { useNavigate } from "react-router-dom";
 import PostForm from "../components/postForm";
-import { Wrapper } from "../components/auth-Components";
-
+import { HomeWrapper,GlobalStyle } from "../components/auth-Components";
+import Timeline from "../components/timeline";
 export default function Home() {
     const navigate = useNavigate(); // 
     const logOut = () => {
@@ -15,9 +15,12 @@ export default function Home() {
     };
         
     return (
-        <Wrapper>
+
+        <HomeWrapper>
+            <GlobalStyle/>
             <button onClick={logOut}>logout</button> 
             <PostForm/>
-        </Wrapper>
+            <Timeline />
+        </HomeWrapper>
     );
 }

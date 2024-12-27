@@ -1,5 +1,13 @@
 import { styled } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 
+export const GlobalStyle = createGlobalStyle`
+    ::-webkit-scrollbar {
+        display: none; /* WebKit 기반 브라우저 */
+    }
+    -ms-overflow-style: none; /* IE, Edge */
+    scrollbar-width: none; /* Firefox */
+`;
 export const Wrapper =styled.div`
     height: 100%;
     display: flex;
@@ -100,4 +108,11 @@ export const PostSubmitBtn = styled.input`
         opacity: 0.9;
     }
 }
+`;
+
+export const HomeWrapper = styled.div`
+    display: grid;
+    gap: 50px;
+    overflow-y: scroll;
+    grid-template-rows: 1fr 5fr ;
 `;

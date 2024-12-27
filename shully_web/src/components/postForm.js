@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { auth, db, storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { addDoc, collection, updateDoc } from "firebase/firestore";
+import { serverTimestamp,addDoc, collection, updateDoc } from "firebase/firestore";
 import {styled} from "styled-components";
 import { PostFormWrapper, PostTextArea, PostSubmitBtn, AttachFileButton, AttachFileInput} from "./auth-Components";
 
@@ -34,7 +34,7 @@ export default function PostForm(){
         const user = auth.currentUser;
         if(!user ||isLoading|| shully==="" || shully.length>180) return;
 
-        try{
+        try {
             setLoading(true);
             //게시물을 하나의 변수로 명명
            const doc = await addDoc(collection(db, "shullys"),{
@@ -49,22 +49,28 @@ export default function PostForm(){
                 const locationRef = ref(
                     storage,`shullys/${user.uid}-${user.displayName}/${doc.id}`
                 );
-                await uploadBytes(locationRef, file).then((snapshot) => {
+                const result = await uploadBytes(locationRef, file);
                     console.log("upload complete");
-                });
-                const fileURL = await getDownloadURL(locationRef);
+                //posting err why:  TypeError: Cannot read properties of undefined (reading 'ref') at onSubmit (bundle.js:926:104) 터미널 상 에러가 남. -> 난 snapshot 기능을 쓰기 때문에, 직접 참조변수를 받아와야 한다. then() 메소드로 인해 변수값 저장에 에러가 나서 발생됨.
+                const photoURL = await getDownloadURL(result.ref);
+                //serverTimestamp가 현재 작업시엔 편하지만 데이터 전송 속도측면에서 나중에 Date.now(); 로 바꿀예정 
+                // const timeStamp = serverTimestamp();
                 
                 //fireDB에 파일 url 을 임의로 추가. json 형태로 item 명만 입력해 주는 듯.
-                await updateDoc(doc.ref, {fileURL,});
-            }
+                //저장 시간도 추적가능 하게 함.
+                await updateDoc(doc, {
+                        photo: photoURL,
+                        // createdAt: timeStamp,
+                });}                        
+ 
                 setShully("");
-                setFile(null);
-                }catch(e){
+                setFile(null); 
+             } catch(e){
                     console.log("posting err why: ",e);              
                 } finally{
                     setLoading(false);
                 }
-         };
+            }
     return (
     <PostFormWrapper onSubmit={onSubmit}>
         <PostTextArea required rows={5} maxLength={180} value={shully} onChange={onChange}placeholder="What is happening?"/>
@@ -81,5 +87,5 @@ export default function PostForm(){
             <PostSubmitBtn type= "submit" value={isLoading ? "Posting..." : "Post Shully"}></PostSubmitBtn>
 
     </PostFormWrapper>
-    )
+    );
 }
