@@ -23,7 +23,7 @@ const MenuItem = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid grey;
+    border: 2px solid rgb(157, 217, 217, 0.7);
     height: 50px;
     width: 50px;
     border-radius: 50%;
@@ -33,10 +33,10 @@ const MenuItem = styled.div`
         }
         &:hover {
         opacity: 0.8;
-        border-color: rgb(180, 169, 88); /* 호버 시 변경 *
+        border-color: rgb(180, 169, 88, 0.5); /* 호버 시 변경 *
         }
         &.log-out{
-            border-color: brown;
+            border-color: rgb(157, 217, 217);
             svg{
             fill: brown;
         }

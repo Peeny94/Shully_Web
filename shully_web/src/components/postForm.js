@@ -2,7 +2,7 @@ import { useState } from "react";
 import { auth, db, storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { serverTimestamp,addDoc, collection, updateDoc } from "firebase/firestore";
-import {styled} from "styled-components";
+// import {styled} from "styled-components";
 import { PostFormWrapper, PostTextArea, PostSubmitBtn, AttachFileButton, AttachFileInput} from "./auth-Components";
 
 
@@ -11,29 +11,20 @@ export default function PostForm(){
     const[shully, setShully] = useState("");
     // const [file, setFile] = useState<File | null>(null); // 해당코드를 바꿔줬다. 
     const[file, setFile] = useState(null);
-    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const onChange = (e) => {
         setShully(e.target.value || "");// 문자열 아니면 공백
     };
-    const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { files } = e.target; 
-        if (files && files.length === 1) {
-            // 타입 검증을 위에서 코드를 바꿔줬어서. 만일의 경우로 File 검증을 시도해서 저장.
-            if (files[0] instanceof File) {
-                setFile(files[0]); // 올바른 File 객체만 상태에 저장
-            } else {
-                console.error("Invalid file type provided");
-                setFile(null);
-            }
-        } else {
-            setFile(null); // 파일이 없거나 배열이 비어 있는 경우
-        }
+    // e: React.ChangeEvent<HTMLTextAreaElement> <- 이것도 ts 언어임 킹받.
+    const onFileChange = (e) => {
+        // ts 타입 검증 대체 코드, {files} 로 직접적인 값으로 if문 작성 대신 변수값 자체에 반복문 결과를 저장해줌.
+        const file = e.target.files?.[0] || null; // 파일 변수값을 확인.
+        setFile(file instanceof File ? file : null); // 파일이면 저장, 아니면 상태 초기화
     };
 // db 생성 코드 설정
-    const onSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = async(e) => {
         e.preventDefault();
         const user = auth.currentUser;
-        if(!user ||isLoading|| shully==="" || shully.length>180) return;
-
+        if(!user ||isLoading || shully==="" || shully.length>180) return;
         try {
             setLoading(true);
             //게시물을 하나의 변수로 명명
@@ -49,10 +40,10 @@ export default function PostForm(){
                 const locationRef = ref(
                     storage,`shullys/${user.uid}-${user.displayName}/${doc.id}`
                 );
-                const result = await uploadBytes(locationRef, file);
+                const uploadResult = await uploadBytes(locationRef, file);
                     console.log("upload complete");
                 //posting err why:  TypeError: Cannot read properties of undefined (reading 'ref') at onSubmit (bundle.js:926:104) 터미널 상 에러가 남. -> 난 snapshot 기능을 쓰기 때문에, 직접 참조변수를 받아와야 한다. then() 메소드로 인해 변수값 저장에 에러가 나서 발생됨.
-                const photoURL = await getDownloadURL(result.ref);
+                const photoURL = await getDownloadURL(uploadResult.ref);
                 //serverTimestamp가 현재 작업시엔 편하지만 데이터 전송 속도측면에서 나중에 Date.now(); 로 바꿀예정 
                 // const timeStamp = serverTimestamp();
                 
@@ -62,7 +53,6 @@ export default function PostForm(){
                         photo: photoURL,
                         // createdAt: timeStamp,
                 });}                        
- 
                 setShully("");
                 setFile(null); 
              } catch(e){
@@ -70,7 +60,7 @@ export default function PostForm(){
                 } finally{
                     setLoading(false);
                 }
-            }
+            };
     return (
     <PostFormWrapper onSubmit={onSubmit}>
         <PostTextArea required rows={5} maxLength={180} value={shully} onChange={onChange}placeholder="What is happening?"/>

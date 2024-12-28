@@ -31,7 +31,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid white;
+    border: 2px solid rgb(191, 169, 88, 0.5);
     height: 50px;
     width: 50px;
     border-radius: 50%;
@@ -55,7 +55,7 @@
 }
 
 .TextArea {
-    border: 2px solid white;
+    border: 2px solid rgb(191, 169, 88, 0.5);
     padding: 20px;
     border-radius: 20px;
     font-size: 16px;
@@ -69,16 +69,16 @@
     }
     &:focus {
         outline: none;
-        border-color: #1d9bf0;
+        border-color:rgb(191, 169, 88);
     }
 }
 
 .AttachFileButton {
     padding: 10px 0px;
-    color: #1d9bf0;
+    color: rgb(157, 217, 217);
     text-align: center;
     border-radius: 20px;
-    border: 1px solid #1d9bf0;
+    border: 1px solid rgb(157, 217, 217);
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
@@ -101,6 +101,40 @@
 .homeWrapper {
     display: grid;
     gap: 50px;
-    overflow-y: scroll;
+    overflow-y:visible ;
     grid-template-rows: 1fr 5fr ;
+}
+
+.ShullyPayload {
+    margin: 10px 0px;
+    font-size: 18px;
+}
+
+.Photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 15px;
+    object-fit:fill;
+}
+.ShullyWrapper {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    padding: 20px ;
+    align-self: start;
+    border :1px solid rgb(127, 217, 207, 0.5); 
+    border-radius: 15px;
+    background-color:rgba(244, 249, 253, 0.805);
+}
+
+.ShullyColumn {
+    display: grid;
+    gap: 50px;
+    overflow-y: scroll;
+}
+
+.ShullyUsername {
+    font-weight: 600px;
+    font-size: 15px;
+    font-style: italic;
+    color: hsl(248, 69%, 15%);
 }

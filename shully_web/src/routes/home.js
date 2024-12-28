@@ -4,21 +4,21 @@ import { useNavigate } from "react-router-dom";
 import PostForm from "../components/postForm";
 import { HomeWrapper,GlobalStyle } from "../components/auth-Components";
 import Timeline from "../components/timeline";
+
 export default function Home() {
     const navigate = useNavigate(); // 
-    const logOut = () => {
-        auth.signOut().then(() => {
-            navigate("/login");
-        }).catch((error) => {
-            console.error("Logout failed:", error);
-        });
-    };
+    // const logOut = () => {
+    //     auth.signOut().then(() => {
+    //         navigate("/login");
+    //     }).catch((error) => {
+    //         console.error("Logout failed:", error);
+    //     });
+    // };
         
     return (
 
         <HomeWrapper>
             <GlobalStyle/>
-            <button onClick={logOut}>logout</button> 
             <PostForm/>
             <Timeline />
         </HomeWrapper>
