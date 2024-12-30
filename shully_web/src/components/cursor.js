@@ -2,11 +2,10 @@
 
 import { styled } from "styled-components";
 import cursor from "../imgs/cursor.svg";
-import { styled } from "styled-components";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import cloudelogo from "../imgs/cloude.svg";
-import cursor from "../imgs/cursor.svg";
+
 
 const Botton =styled.span`
     margin-top: 50px;
@@ -27,14 +26,21 @@ const Botton =styled.span`
 const Log = styled.img`
     height: 25px;
 `; 
-export default function Cursor() {
-    return (
-        <Botton>
-        <Log src={cloudelogo}/>
-    </Botton>
-    );
-}
-
+// export default function Cursor() {
+//     return (
+//         <Botton>
+//         <Log src={cloudelogo}/>
+//     </Botton>
+//     );
+// }
+export const ScrollImage = styled.img` 
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 150px;
+  height: 150px;
+  object-fit: contain; /* 이미지 비율 유지 */
+`;
 
 
 

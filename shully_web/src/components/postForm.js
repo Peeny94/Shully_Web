@@ -38,7 +38,7 @@ export default function PostForm(){
             if(file){
                 //저장하는 url 경로, 해당 경로는 죄가 없다.
                 const locationRef = ref(
-                    storage,`shullys/${user.uid}-${user.displayName}/${doc.id}`
+                    storage,`shullys/${user.uid}/${doc.id}`
                 );
                 const uploadResult = await uploadBytes(locationRef, file);
                     console.log("upload complete");

@@ -1,5 +1,5 @@
-import { auth } from "../firebase";
-import {styled} from "styled-components";
+// import { auth } from "../firebase";
+// import {styled} from "styled-components";
 import { useNavigate } from "react-router-dom";
 import PostForm from "../components/postForm";
 import { HomeWrapper,GlobalStyle } from "../components/auth-Components";

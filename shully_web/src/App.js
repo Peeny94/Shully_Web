@@ -45,16 +45,25 @@ const router = createBrowserRouter([
 ]);
 const GlobalStyles = createGlobalStyle`
   ${reset};
-  *{
-    
+  * {
     box-sizing: border-box;
   }
+// height: 100%를 html과 body 모두에 설정해야 그라데이션이 전체 화면에 적용됩니다.
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* html과 body 모두 높이를 설정 */
+  }
+
   body {
-    background-color: whitesmoke;
-    color:grey;
+    background: linear-gradient(180deg,rgba(67, 221, 216, 0.15) 0%, rgba(244, 249, 253, 0.805) 100%);
+    background-attachment: scroll; /* 스크롤 시 배경 고정 */
+    background-size: cover; /* 화면 전체를 덮도록 설정 */
+    background-repeat: no-repeat; /* 반복 금지 */
+    color: grey; /* 기본 텍스트 색상 */
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
-`
+`;
 const Wrapper = styled.div`
   height: 100vh;
   display: flex;
