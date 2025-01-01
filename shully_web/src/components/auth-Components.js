@@ -265,3 +265,47 @@ export const ModifyButton = styled.button`
         border-color: rgb(72, 242, 236, 0.3);
     }
 `;
+export const ProfileWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:20px;
+
+`;
+export const UserProfileImageWrapper = styled.label`
+    width: 80px;
+    overflow: hidden;
+    height: 80px;
+    border-radius: 50%;
+    background-color: rgba(72, 242, 206, 0.1);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img{
+        width: 50px;
+    }
+`;
+export const UserProfileImage = styled.img`
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: fit;
+    border: 2px solid #ccc;
+`;
+
+export const UserImageUpload = styled.input`
+    display: none;
+    width: 80px;
+    overflow: hidden;
+    height: 80px;
+    border-radius: 50%;
+    background-color:rgb(157, 217, 217); 
+    cursor: pointer;
+
+`;
+
+export const UserProfileName = styled.span`
+    font-size: 22px;
+    font-weight: bold;
+`;
