@@ -33,16 +33,11 @@ export default function Profile() {
             const locationRef = ref(storage, `UserProfiles/${user?.uid}`);
             const result = await uploadBytes(locationRef, file);
             const UserProfileUrl = await getDownloadURL(result.ref);
-
-            // Firebase Auth 사용자 프로필 업데이트
-            await updateProfile(user, { photoURL: UserProfileUrl });
-
-            // 로컬 상태 업데이트
             setUserProfile(UserProfileUrl);
-            alert("Profile updated successfully.");
+            await updateProfile(user, { photoURL: UserProfileUrl });
+            window.confirm("Are you sure changed your profile?");
         } catch (error) {
             console.error("Error updating profile:", error);
-            alert("Failed to update profile. Please try again.");
         }
     };
 
@@ -54,24 +49,43 @@ export default function Profile() {
 
         const shullyQuery = query(
             collection(db, "shullys"),
-            where("userId", "==", user.uid),
-            orderBy("createdAt", "desc"),
+            where("userid", "==", user.uid),
+            // orderBy("createdAt", "desc"),
             limit(25)
         );
-
-        const snapshot = await getDocs(shullyQuery);
-        const shullys = snapshot.docs.map((doc)=>{
-            const {shully, createdAt, userId, username, photo} = doc.data();
-            return {
-                shully,
-                createdAt,
-                userId,
-                username,
-                photo,
-                id: doc.id,
-            };
-        });
-        setShullyForUsers(shullys);
+        try {
+            const snapshot = await getDocs(shullyQuery);
+            console.log("Snapshot:", snapshot);
+            console.log("Docs:", snapshot.docs);
+    // flatmap 방식으로 배열 정리를 해야 가져온다. css 호환 문제는 아닌듯, 쿼리 id 소문자 오타 수정. 난 userid! not userId@@@
+            const shullys = snapshot.docs.flatMap((doc) => {
+                const data = doc.data();
+                const { shully, createdAt, userid, username, photo } = data;
+    
+                // 필수 필드가 모두 있는지 확인
+                const requiredFields = [shully, createdAt, userid, username];
+                const hasAllRequiredFields = requiredFields.every((field) => field !== undefined);
+    
+                if (!hasAllRequiredFields) {
+                    console.warn("Incomplete data:", data);
+                    return []; // 데이터가 누락된 경우 빈 배열 반환
+                }
+    
+                return {
+                    shully,
+                    createdAt,
+                    userid,
+                    username,
+                    photo,
+                    id: doc.id,
+                };
+            });
+    
+            console.log("Filtered Shullys:", shullys);
+            setShullyForUsers(shullys);
+        } catch (error) {
+            console.error("Error fetching shullys:", error);
+        }
     };
         useEffect(() => {
             fetchShullys();

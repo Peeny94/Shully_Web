@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { auth, db, storage } from "../firebase";
 import { 
+    AttachFileInput,AttachFileButton,
     ShullyWrapper, 
     ShullyColumn, 
     ShullyPayload, 
@@ -11,8 +12,8 @@ import {
     ButtonContainer 
 } from "./auth-Components";
 import cloudeImage from "../imgs/cloude.jpg";
-import { deleteDoc, doc, updateDoc } from "firebase/firestore";
-import { deleteObject, ref } from "firebase/storage";
+import { deleteDoc, doc, updateDoc} from "firebase/firestore";
+import { deleteObject, ref,getDownloadURL, uploadBytes } from "firebase/storage";
 
 export default function Shully({ username, photo, shully, userid, id }) {
     const user = auth.currentUser;
@@ -20,7 +21,12 @@ export default function Shully({ username, photo, shully, userid, id }) {
     // 상태 선언
     const [isEditing, setIsEditing] = useState(false);
     const [editShully, setEditShully] = useState(shully);
-
+    const[file, setFile] = useState(null);
+    const onFileChange = (e) => {
+        // ts 타입 검증 대체 코드, {files} 로 직접적인 값으로 if문 작성 대신 변수값 자체에 반복문 결과를 저장해줌.
+        const file = e.target.files?.[0] || null; // 파일 변수값을 확인.
+        setFile(file instanceof File ? file : null); // 파일이면 저장, 아니면 상태 초기화
+    };
     const handleAction = async (actionType) => {
         const ok = window.confirm(
             `Are you sure you want to ${actionType === "delete" ? "delete" : "edit"} this content?`
@@ -52,9 +58,21 @@ export default function Shully({ username, photo, shully, userid, id }) {
     const updateShully = async (e) => {
         e.preventDefault();
         try {
+            const editShully =[];
             await updateDoc(doc(db, "shullys", id), {
                 shully: editShully,
             });
+            if(file){
+                const locationRef = ref(
+                    storage,`shullys/${user.uid}-${user.displayName}/${doc.id}`
+                );
+                const uploadResult = await uploadBytes(locationRef, file);
+                    console.log("upload complete");
+                const photoURL = await getDownloadURL(uploadResult.ref);            
+                await updateDoc(doc, {
+                    photo: photoURL,
+                    // createdAt: timeStamp,
+            });}
             alert("Content updated successfully.");
             setIsEditing(false);
         } catch (e) {
@@ -92,21 +110,31 @@ export default function Shully({ username, photo, shully, userid, id }) {
             </ShullyColumn>
 
             <ButtonContainer>
-                {user?.uid === userid && (
-                    <>
-                        {isEditing ? (
-                            <DeleteButton onClick={updateShully}>Save</DeleteButton>
-                        ) : (
-                            <DeleteButton onClick={() => handleAction("modify")}>
-                                Edit
-                            </DeleteButton>
-                        )}
-                        <DeleteButton onClick={() => handleAction("delete")}>
-                            Delete
-                        </DeleteButton>
-                    </>
-                )}
-            </ButtonContainer>
+    {user?.uid === userid && (
+        <>
+            {isEditing ? (
+                <>
+                    <DeleteButton onClick={updateShully}>Save</DeleteButton>
+
+                    {/* 파일 업로드 버튼 */}
+                    <AttachFileButton htmlFor="file" value= {file ? "Photo added ✅" : "Add Photo"}>
+                        
+                    </AttachFileButton>
+                    <AttachFileInput
+                        onChange={onFileChange}
+                        type="file"
+                        id="file"
+                        accept="image/*"
+                        style={{ display: "none" }} // 숨김 처리
+                    />
+                </>
+            ) : (
+                <DeleteButton onClick={() => handleAction("modify")}>Edit</DeleteButton>
+            )}
+            <DeleteButton onClick={() => handleAction("delete")}>Delete</DeleteButton>
+        </>
+    )}
+</ButtonContainer>
         </ShullyWrapper>
     );
 }

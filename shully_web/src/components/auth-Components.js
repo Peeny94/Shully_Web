@@ -52,8 +52,48 @@ export const Input = styled.input`
         }
     }
 `; 
+export const LoginButton = styled.button`
+// all: unset; /* 기본 스타일 제거 */
+  display: inline-block; /* 레이아웃 정렬 */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 50px;
+  background-color: rgb(157, 217, 217);
+  outline-color: rgb(191, 169, 88);
+  font-size: 16px;
+  width: 71.5%;
+  cursor: pointer;
+    &:hover {
+    opacity: 0.8;
+    border-color: rgb(191, 169, 88); /* 호버 시 변경 */
+`;
+export const LoginInput = styled.input`
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: rgb(33, 83, 83);
+    background-size: cover;
+    background-color: rgb(157, 217, 217);
+    // background-image:url("cloud.jpg");
+    width: 300%; //강의와 다른 설정 (<-100)
+    outline-color: rgb(191, 169, 88);
+    font-size:16px;
+    &[type="submit"] {
+        cursor:pointer;
+        &:hover {
+        opacity: 0.8;
+        }
+    display: flex;
+    }
+`;
 export const Title = styled.h1`
     font-size:  42px;   
+`;
+export const LoginTitle = styled.h1`
+    font-size: 42px;
+    text-align: justify;
+    color: rgb(147, 117, 117);
+    position: relative;; 
+    left: -3.5%;
 `;
 export const Error = styled.span`
     font-weight:600;
