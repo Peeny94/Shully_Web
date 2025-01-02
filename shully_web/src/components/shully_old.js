@@ -1,20 +1,25 @@
 import React, { useState } from "react";
 import { auth, db, storage } from "../firebase";
 import { 
-    AttachFileInput, ModifyFileButton, ShullyWrapper, 
+    AttachFileInput, AttachFileButton, ShullyWrapper, 
     ShullyColumn, ShullyPayload, ShullyUsername, 
     Photo, PhotoBack, DeleteButton, ButtonContainer 
 } from "./auth-Components";
-import { deleteDoc, doc, updateDoc } from "firebase/firestore";
-import { deleteObject, ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import { ref as storageRef, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
+import { ref, update, getDatabase } from "firebase/database";
 
 export default function Shully({ username, photo, shully, userid, id }) {
     const user = auth.currentUser;
 
-    const [isEditing, setIsEditing] = useState(false); // 편집 모드 상태
-    const [editShully, setEditShully] = useState(shully); // 텍스트 상태
-    const [file, setFile] = useState(null); // 새로 업로드된 파일 상태
-    const [previewURL, setPreviewURL] = useState(photo); // 파일 미리 보기 URL
+    // 상태 선언
+    const [isEditing, setIsEditing] = useState(false);
+    const [editShully, setEditShully] = useState(shully);
+    const [file, setFile] = useState(null);
+
+    const onFileChange = (e) => {
+        const selectedFile = e.target.files?.[0] || null;
+        setFile(selectedFile instanceof File ? selectedFile : null);
+    };
     const handleAction = async (actionType) => {
         const ok = window.confirm(
             `Are you sure you want to ${actionType === "delete" ? "delete" : "edit"} this content?`
@@ -30,55 +35,64 @@ export default function Shully({ username, photo, shully, userid, id }) {
                 }
                 await Promise.all(deleteTasks);
                 alert("Content deleted successfully.");
-            } catch (e) {
-                console.error("Error deleting content:", e);
+            } catch (error) {
+                console.error("Error deleting content:", error);
                 alert("Failed to delete content. Please try again.");
             }
         } else if (actionType === "modify") {
             setIsEditing(true);
         }
     };
-    
-    const handleFileChange = (e) => {
-        const selectedFile = e.target.files?.[0] || null;
-        if (selectedFile) {
-            setFile(selectedFile);
-            setPreviewURL(URL.createObjectURL(selectedFile)); // 파일 미리 보기 URL 생성
-        } else {
-            setFile(null);
-            setPreviewURL(photo); // 기존 사진으로 복원
+    // 콘텐츠 업데이트 핸들러
+    const onUpdate = async (e) => {
+        e.preventDefault();
+        const db = getDatabase();
+
+        try {
+            // 업데이트 데이터 준비
+            const updateData = { shully: editShully };
+            if (file) {
+                // 파일 업로드 처리
+                const filePath = `shullys/${user.uid}/${id}`;
+                const fileStorageRef = storageRef(storage, filePath);
+                const uploadResult = await uploadBytes(fileStorageRef, file);
+                const photoURL = await getDownloadURL(uploadResult.ref);
+
+                updateData.photo = photoURL; // 업데이트 데이터에 photoURL 추가
+            }
+
+            // Realtime Database에 업데이트
+            const updateShully = {};
+            updateShully[`/shullys/${user.uid}/${id}`] = updateData;
+            await update(ref(db), updateShully);
+
+            alert("Content updated successfully.");
+            setIsEditing(false);
+        } catch (error) {
+            console.error("Error updating content:", error);
+            alert("Failed to update content. Please try again.");
         }
     };
 
-    const updateShully = async (e) => {
-        e.preventDefault();
+    const removePhoto = async () => {
+        if (!photo) return;
+        const ok = window.confirm("Are you sure you want to delete the photo?");
+        if (!ok) return;
+
         try {
-            const updates = { shully: editShully };
-            if(!file) return null;
-            if (file) {
-                // 기존 사진 삭제
-                if (photo) {
-                    const existingFileRef = ref(storage, photo);
-                    await deleteObject(existingFileRef);
-                }
+            const filePath = `shullys/${user.uid}/${id}`;
+            const fileStorageRef = storageRef(storage, filePath);
+            await deleteObject(fileStorageRef);
 
-                // 새 사진 업로드
-                const newFileRef = ref(storage, `shullys/${user.uid}/${id}`);
-                const uploadResult = await uploadBytes(newFileRef, file);
-                const photoURL = await getDownloadURL(uploadResult.ref);
-                updates.photo = photoURL;
-            }
+            const db = getDatabase();
+            const updateShully = {};
+            updateShully[`/shullys/${user.uid}/${id}/photo`] = null;
+            await update(ref(db), updateShully);
 
-            // Firestore 문서 업데이트
-            await updateDoc(doc(db, "shullys", id), updates);
-
-            alert("Content updated successfully.");
-            setFile(null); // 파일 상태 초기화
-            setPreviewURL(null); // 미리 보기 초기화
-            setIsEditing(false);
-        } catch (e) {
-            console.error("Error updating content:", e);
-            alert("Failed to update content. Please try again.");
+            alert("Photo removed successfully.");
+        } catch (error) {
+            console.error("Error removing photo:", error);
+            alert("Failed to remove photo. Please try again.");
         }
     };
 
@@ -103,9 +117,8 @@ export default function Shully({ username, photo, shully, userid, id }) {
                 )}
             </ShullyColumn>
             <ShullyColumn>
-                {/* 미리 보기 이미지 또는 기존 사진 표시 */}
-                {previewURL ? (
-                    <Photo src={previewURL} alt="Preview" />
+                {photo ? (
+                    <Photo src={photo} alt="Uploaded Photo" />
                 ) : (
                     <PhotoBack />
                 )}
@@ -116,17 +129,22 @@ export default function Shully({ username, photo, shully, userid, id }) {
                     <>
                         {isEditing ? (
                             <>
-                                <DeleteButton onClick={updateShully}>Save</DeleteButton>
-                                <ModifyFileButton htmlFor="editFile">
+                                <DeleteButton onClick={onUpdate}>Save</DeleteButton>
+                                <AttachFileButton htmlFor="file">
                                     {file ? "Photo added ✅" : "Add Photo"}
-                                </ModifyFileButton>
+                                </AttachFileButton>
                                 <AttachFileInput
-                                    onChange={handleFileChange}
+                                    onChange={onFileChange}
                                     type="file"
-                                    id="editFile"
+                                    id="file"
                                     accept="image/*"
                                     style={{ display: "none" }}
                                 />
+                                {photo && (
+                                    <DeleteButton onClick={removePhoto}>
+                                        Remove Photo
+                                    </DeleteButton>
+                                )}
                             </>
                         ) : (
                             <DeleteButton onClick={() => setIsEditing(true)}>Edit</DeleteButton>

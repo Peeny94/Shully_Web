@@ -146,6 +146,8 @@ export const AttachFileButton =styled.label`
         opacity: 0.9;
     }
 `;
+
+
 export const AttachFileInput = styled.input`
     display: none;
 `;
@@ -287,6 +289,26 @@ export const DeleteButton = styled.button`
     &:hover {
         background-color: rgba(72, 242, 236, 0.6);
         border-color: rgb(72, 242, 236, 0.3);
+    }
+`;
+
+export const ModifyFileButton =styled.label`
+    background-color: rgba(72, 242, 236, 0.1);  
+    padding: 5px 10px;
+    color: hsl(248, 69%, 15%,0.4);
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: 5px;
+    border: 2px solid rgba(72, 242, 236, 0.3);
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    &:hover {
+        background-color: rgba(72, 242, 236, 0.6);
+        border-color: rgb(72, 242, 236, 0.3);
+    }
+    &:active{
+        opacity: 0.9;
     }
 `;
 export const ModifyButton = styled.button`
