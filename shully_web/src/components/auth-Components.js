@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import React from "react";
 import { createGlobalStyle } from "styled-components";
 import cloudeImage from "../imgs/cloude.jpg";
 export const GlobalStyle = createGlobalStyle`

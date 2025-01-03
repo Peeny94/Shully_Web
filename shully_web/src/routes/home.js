@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import PostForm from "../components/postForm";
 import { HomeWrapper,GlobalStyle } from "../components/auth-Components";
 import Timeline from "../components/timeline";
-
+import React from "react";
 export default function Home() {
     const navigate = useNavigate(); // 
     // const logOut = () => {

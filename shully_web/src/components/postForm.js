@@ -2,6 +2,7 @@ import { useState } from "react";
 import { auth, db, storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { serverTimestamp,addDoc, collection, updateDoc } from "firebase/firestore";
+import React from "react";
 // import {styled} from "styled-components";
 import { PostFormWrapper, PostTextArea, PostSubmitBtn, AttachFileButton, AttachFileInput} from "./auth-Components";
 

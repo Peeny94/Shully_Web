@@ -3,6 +3,7 @@ import { auth } from "../firebase";
 import { GithubAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth"
 import {useNavigate } from "react-router-dom";
 import cloudelogo from "../imgs/cloude.svg";
+import React from "react";
 
 const Botton =styled.span`
     margin-top: 20px;

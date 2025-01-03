@@ -12,6 +12,7 @@ import {
     Wrapper,
   } from "../components/auth-Components";
 import GithubBotton from "../components/githubBtn";
+import React from "react";
 
 //react component 명명은 대문자로 시작!
 export default function LoginAccount(){
