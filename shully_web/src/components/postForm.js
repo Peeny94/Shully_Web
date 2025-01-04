@@ -25,7 +25,7 @@ export default function PostForm(){
     const onSubmit = async(e) => {
         e.preventDefault();
         const user = auth.currentUser;
-        if(!user ||isLoading || shully==="" || shully.length>180) return;
+        if(!user ||isLoading || shully==="" || shully.length>1800) return;
         try {
             setLoading(true);
             //게시물을 하나의 변수로 명명
@@ -64,7 +64,7 @@ export default function PostForm(){
             };
     return (
     <PostFormWrapper onSubmit={onSubmit}>
-        <PostTextArea required rows={5} maxLength={180} value={shully} onChange={onChange}placeholder="What is happening?"/>
+        <PostTextArea required rows={5} maxLength={18000} value={shully} onChange={onChange}placeholder="What is happening?"/>
 {/* file이란 id를 가진 value를 input 함 */}
 {/* htmlFor를 AttachFileInput의 id로 설정했기에 AttachFileButton을 클릭해도 AttachFileInput의 기능을 한다. */}
         <AttachFileButton htmlFor="file">
@@ -75,7 +75,7 @@ export default function PostForm(){
             */}     
         <AttachFileInput onChange={onFileChange} type="file" id="file" accept="image/*"/>
 
-            <PostSubmitBtn type= "submit" value={isLoading ? "Posting..." : "Post Shully"}></PostSubmitBtn>
+        <PostSubmitBtn type= "submit" value={isLoading ? "Posting..." : "Post Shully"}></PostSubmitBtn>
 
     </PostFormWrapper>
     );

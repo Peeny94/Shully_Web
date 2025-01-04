@@ -41,6 +41,11 @@ const router = createBrowserRouter([
   {
     path:"/createAccount",
     element:<CreateAccount/>
+  },
+  {
+    future: {
+      v7_relativeSplatPath: true, // 미래 플래그 활성화
+    },
   }
 ]);
 const GlobalStyles = createGlobalStyle`

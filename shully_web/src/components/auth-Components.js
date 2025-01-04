@@ -131,7 +131,31 @@ export const PostTextArea = styled.textarea`
         outline: none;
         border-color:rgb(191, 169, 88);
     }
-    `;
+`;
+
+export const EditTextArea = styled.textarea`
+border: 2px solid rgba(191, 169, 88, 0.5);
+    padding: 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    color: black;
+    background-color: rgba(255, 245, 250, 0.8);
+    width: 100%;
+    resize: none;
+    min-height: 40px; /* 최소 높이 */
+    max-height: 300px; /* 최대 높이 */
+    height: auto;
+    overflow: hidden; /* 스크롤 막기 */
+    box-sizing: border-box; /* 패딩 포함 높이 계산 */
+    &::placeholder {
+        font-size: 1rem;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    &:focus {
+        outline: none;
+        border-color: rgb(191, 169, 88);
+    }
+`;
 export const AttachFileButton =styled.label`
     background-color: rgb(127, 217, 207);
     padding: 10px 0px;

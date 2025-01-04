@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { auth, db, storage } from "../firebase";
 import { 
     AttachFileInput, ModifyFileButton, ShullyWrapper, 
-    ShullyColumn, ShullyPayload, ShullyUsername, 
+    ShullyColumn, ShullyPayload, ShullyUsername, EditTextArea,
     Photo, PhotoBack, DeleteButton, ButtonContainer 
 } from "./auth-Components";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
@@ -38,6 +38,10 @@ export default function Shully({ username, photo, shully, userid, id }) {
             setIsEditing(true);
         }
     };
+    const handleInput = (e) => {
+        e.target.style.height = "auto"; // 높이 초기화
+        e.target.style.height = `${e.target.scrollHeight}px`; // 동적으로 높이 설정
+    };
     
     const handleFileChange = (e) => {
         const selectedFile = e.target.files?.[0] || null;
@@ -49,54 +53,65 @@ export default function Shully({ username, photo, shully, userid, id }) {
             setPreviewURL(photo); // 기존 사진으로 복원
         }
     };
+    const [isUploading, setIsUploading] = useState(false);
 
     const updateShully = async (e) => {
-        e.preventDefault();
-        try {
-            const updates = { shully: editShully };
-            if(!file) return null;
-            if (file) {
-                // 기존 사진 삭제
+        e.preventDefault(); // 폼 제출 기본 동작 방지
+        setIsUploading(true); // 업로드 상태 시작
+        const updates = { shully: editShully };
+    
+        if (!file) {
+            console.log("No file provided, updating text only.");
+        } else if (file) {
+            try {
+                console.log("File provided, uploading...");
+    
+                // 기존 파일 삭제
                 if (photo) {
                     const existingFileRef = ref(storage, photo);
                     await deleteObject(existingFileRef);
                 }
-
-                // 새 사진 업로드
+    
+                // 새 파일 업로드
                 const newFileRef = ref(storage, `shullys/${user.uid}/${id}`);
                 const uploadResult = await uploadBytes(newFileRef, file);
                 const photoURL = await getDownloadURL(uploadResult.ref);
-                updates.photo = photoURL;
+    
+                updates.photo = photoURL; // 파일 URL 추가
+            } catch (e) {
+                console.error("Error uploading file:", e);
+                alert("Failed to upload the file. Please try again.");
+                setIsUploading(false); 
+                return; // 에러 발생 시 중단
             }
-
-            // Firestore 문서 업데이트
+        }
+    
+        // Firestore 업데이트
+        try {
             await updateDoc(doc(db, "shullys", id), updates);
-
-            alert("Content updated successfully.");
+            console.log("Update successful");
+    
+            // 업데이트 성공 후 화면에 즉시 반영
+            setIsEditing(false); // 편집 모드 종료
+            setPreviewURL(updates.photo || photo); // 새로운 사진 URL 또는 기존 사진 설정
             setFile(null); // 파일 상태 초기화
-            setPreviewURL(null); // 미리 보기 초기화
-            setIsEditing(false);
+            alert("Content updated successfully.");
         } catch (e) {
             console.error("Error updating content:", e);
-            alert("Failed to update content. Please try again.");
+            alert("Failed to update the content. Please try again.");           
+        }finally {
+            setIsUploading(false); // 업로드 상태 종료
         }
     };
-
     return (
         <ShullyWrapper>
             <ShullyColumn>
                 <ShullyUsername>{username}</ShullyUsername>
                 {isEditing ? (
-                    <textarea
+                    <EditTextArea 
                         value={editShully}
                         onChange={(e) => setEditShully(e.target.value)}
-                        rows="3"
-                        style={{
-                            width: "100%",
-                            padding: "10px",
-                            borderRadius: "10px",
-                            border: "1px solid rgb(191, 169, 88)",
-                        }}
+                        onInput={handleInput}
                     />
                 ) : (
                     <ShullyPayload>{shully}</ShullyPayload>
@@ -116,7 +131,9 @@ export default function Shully({ username, photo, shully, userid, id }) {
                     <>
                         {isEditing ? (
                             <>
-                                <DeleteButton onClick={updateShully}>Save</DeleteButton>
+                                <DeleteButton onClick={updateShully}>
+                                {isUploading ? "Uploading..." : "Save"}
+                                </DeleteButton>
                                 <ModifyFileButton htmlFor="editFile">
                                     {file ? "Photo added ✅" : "Add Photo"}
                                 </ModifyFileButton>

@@ -30,7 +30,7 @@ export default function LoginAccount(){
         }
     };
 
-        const onSubmit = async(e) => {
+    const onSubmit = async(e) => {
         e.preventDefault();
         setErr("");
         if(isLoading || email ==="" || password==="") return;
