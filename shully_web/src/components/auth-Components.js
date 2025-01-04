@@ -213,7 +213,6 @@ export const HomeWrapper = styled.div`
     &::-webkit-scrollbar-track {
         background-color: transparent;
     }
-    }
 `;
 
 //기본 이미지가 file 에서 가져온 것이고 하기는 기본 html 이미지를 넣은 거라 태그 구분이 다르다.

@@ -17,16 +17,32 @@ import { collection, limit, orderBy, query, where, onSnapshot, getDocs } from "f
 const ShullyList = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    align-items: stretch; /* 자식 요소가 부모의 너비/높이에 맞춤 */
+    justify-content: flex-start; /* 내용이 위쪽에 정렬 */
+    gap: 20px;
+    padding: 10px; /* 내부 여백 추가 */
+    box-sizing: border-box; /* 패딩 포함 크기 계산 */
+    // margin: 20px 0; /* Wrapper 요소 사이의 외부 여백 */
+    overflow-y: auto; /* 세로 스크롤 활성화 */
+        /* 스크롤바 스타일 */
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+    }
+    &::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
 `;
 
 export default function Profile() {
     const user = auth.currentUser;
     const [shullyForUsers, setShullyForUsers] = useState([]); // 사용자 글 상태
     const [userProfile, setUserProfile] = useState(user?.photoURL || cloudeImage); // 프로필 이미지 상태
-
-
-   
+    const [isUpdated, setIsUpdated] = useState(false); // 업데이트 알림 상태
+    
             const onUserProfileChange = async (e) => {
                 const file = e.target.files[0];
                 if (!file || !user) return;
