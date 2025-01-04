@@ -363,18 +363,20 @@ export const UserProfileImageWrapper = styled.label`
     overflow: hidden;
     height: 80px;
     border-radius: 50%;
-    background-color: rgba(72, 242, 206, 0.1);
-    cursor: pointer;
+    background-color: rgba(72, 242, 206, 0.1); 
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
     img{
-        width: 50px;
+        width: 100%; /* 부모 요소의 크기에 맞춤 */
+        height: 100%; /* 부모 요소의 크기에 맞춤 */
+        /* object-fit: cover; 이미지 비율 유지하며 영역 채우기 */
     }
 `;
 export const UserProfileImage = styled.img`
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     object-fit: fit;
     border: 2px solid #ccc;
