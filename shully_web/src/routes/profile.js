@@ -22,19 +22,7 @@ const ShullyList = styled.div`
     gap: 20px;
     padding: 10px; /* 내부 여백 추가 */
     box-sizing: border-box; /* 패딩 포함 크기 계산 */
-    // margin: 20px 0; /* Wrapper 요소 사이의 외부 여백 */
-    overflow-y: auto; /* 세로 스크롤 활성화 */
-        /* 스크롤바 스타일 */
-    &::-webkit-scrollbar {
-        width: 8px;
-    }
-    &::-webkit-scrollbar-thumb {
-        background-color: rgba(0, 0, 0, 0.2);
-        border-radius: 4px;
-    }
-    &::-webkit-scrollbar-track {
-        background-color: transparent;
-    }
+    // margin: 20px 0; Wrapper 요소 사이의 외부 여백
 `;
 
 export default function Profile() {
@@ -57,7 +45,7 @@ export default function Profile() {
                     console.error("Error updating profile:", error);
                 }
             };
-            useEffect(() => {        
+        useEffect(() => {        
             const fetchShullys = async() => {
                 if (!user?.uid) {
                     console.error("User is not authenticated.");

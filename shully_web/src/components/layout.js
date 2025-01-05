@@ -33,17 +33,31 @@ const MenuItem = styled.div`
     svg{
         width: 30px;
         fill: rgb(157, 217, 217);
+        border-color: rgb(157, 217, 217);
         }
-        &:hover {
+    &:hover {
         opacity: 0.8;
-        border-color: rgb(180, 169, 88, 0.5); /* 호버 시 변경 *
-        }
+        border-color: rgb(180, 169, 88, 0.5); 
         &.log-out{
+            fill: rgb(157, 217, 217);
             border-color: rgb(157, 217, 217);
             svg{
-            fill: brown;
+                fill: brown;
+            }
+        } 
+    }
+    &.content-icon{       
+            border-color: rgb(157, 217, 217);
+            svg{
+                fill: none;
+                stroke: rgb(157, 217, 217);
+                stroke-width: 3; /* 선 두께 조정 */ 
+            } 
+            &:hover {
+                opacity: 0.8;
+                border-color: rgb(180, 169, 88,0.5); 
         }
-    }        
+    }       
 `;
 export default function Layout(){
     const navigate = useNavigate();
@@ -77,7 +91,13 @@ export default function Layout(){
 </svg>
                 </MenuItem>
                 </Link>
-
+                
+                <Link to="createContent" >
+                <MenuItem className="content-icon">
+{/* createContentIcon 20*20px */}
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9cd8d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>
+                </MenuItem>
+                </Link>
                 <MenuItem onClick={onLogOut} className="log-out">
 {/* logoutIcon 20*20px */}
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">

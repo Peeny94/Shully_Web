@@ -8,6 +8,7 @@ import Home from "./routes/home";
 import Profile from "./routes/profile";
 import CreateAccount from "./routes/createAccount";
 import Login from "./routes/login";
+import Content from "./routes/createContents";
 import { createGlobalStyle, styled } from "styled-components";
 import reset from "styled-reset";
 import { useEffect } from 'react'; 
@@ -31,7 +32,11 @@ const router = createBrowserRouter([
         path: "profile",
         element:<Profile/>,
       },
-    ],
+      {
+        path:"/createContent",
+        element:<Content/>
+      },
+    ]
   },
   // layout에 login form이 포함되지 않기위해 따로 경로를 지정해 준다.
   {
@@ -42,6 +47,7 @@ const router = createBrowserRouter([
     path:"/createAccount",
     element:<CreateAccount/>
   },
+
   {
     future: {
       v7_relativeSplatPath: true, // 미래 플래그 활성화
