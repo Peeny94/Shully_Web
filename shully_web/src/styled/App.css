@@ -5,18 +5,5 @@
     position: relative;
     height: 100vh;
     overflow-y: auto;
-    background-image: url("../styled/imgs/authum.jpg");
-    background-position: bottom, 110% 150px;
-    background-size: auto 200px, auto 300px;
-    background-repeat: repeat-x, no-repeat;
-    background-attachment: fixed, fixed;
 }
-/* blockPage 리셋 적용하는 데ㅔ 안되는데 */
-.blockPage {
-    all: unset; 
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    color: rgba(67, 97, 97, 0.224);
-  }
 

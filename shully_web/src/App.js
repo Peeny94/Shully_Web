@@ -9,13 +9,16 @@ import Profile from "./routes/profile";
 import CreateAccount from "./routes/createAccount";
 import Login from "./routes/login";
 import Content from "./routes/createContents";
-import styles from "./styled/blockPage.module.css";
-import { styled } from "styled-components";
-import { GlobalStyles,Wrapper } from './components/auth-Components';
 import LoadingScreen from './components/loadingScreen';
 import ProtectedRoute from "./components/protectedRoute";
 
+import styles from "./styled/blockPage.module.css";
+import { styled } from "styled-components";
+import { GlobalStyles,Wrapper } from './components/auth-Components';
+import shullyIcon from "./styled/imgs/shullyStand2.png";
+
 const AccountCreationDisabled = true; // 계정 생성 차단 여부 플래그
+
 const AccountCreationNotice = () => (
   <div className={styles.blockPage}>
     <h1>계정 생성이 비활성화되었습니다</h1>
@@ -27,8 +30,9 @@ const LoginPageWrapper = styled.div`
   height: 100vh;
   display: flex;
   justify-content: center;
-  background-image: url("./styled/imgs/authum.jpg");
-  background: linear-gradient(180deg, rgba(67, 221, 216, 0.15) 0%, rgba(244, 249, 253, 0.805) 100%);
+  background: 
+    linear-gradient(180deg, rgba(67, 221, 216, 0.15) 0%, rgba(244, 249, 253, 0.805) 100%), /* 배경색 그라데이션 */
+    url(${({ image }) => image}) no-repeat 90% 90%; /* 배경 이미지 */
 `;
 const router = createBrowserRouter([
   {
@@ -93,7 +97,7 @@ class App extends Component {
     const { isLoading } = this.state;
 
     return (
-      <LoginPageWrapper className="App">
+      <LoginPageWrapper className="App" image={shullyIcon}>
         <GlobalStyles />
         {isLoading ? <LoadingScreen /> : <RouterProvider router={router} />}
       </LoginPageWrapper>

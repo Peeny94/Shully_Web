@@ -5,9 +5,9 @@ import { Navigate } from "react-router-dom";
 import { FirebaseError } from "firebase/app";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import {
-    Form,
+    Form,ButtonContainer,
     Error,
-    LoginButton,LoginInput,LoginTitle,
+    LoginButton,LoginInput,LoginTitle,CreateAccountBtn,
     Wrapper,Switcher
   } from "../components/auth-Components";
 import GithubBotton from "../components/githubBtn";
@@ -56,13 +56,16 @@ export default function LoginAccount(){
             <LoginInput onChange={onChange} name="password" value = {password} placeholder="Password" type= "password" required/>
             <LoginInput type="submit"  value={isLoading? "Loading.." : "Log in"}/>           
         </Form>
-        <LoginButton onClick={() => navigate("/createAccount")}>Join into Shully</LoginButton>
-        {/* 상기의 setErr 에 값을 세팅해서 err 메세지를 띄운다.*/}
-       {err !== ""? <Error> {err}</Error> : null}
-       {/* <Switcher>
-        <Link to="/createAccount">Create one &rarr;</Link>
-       </Switcher> */}
-       <GithubBotton/>
+        <ButtonContainer>
+            <CreateAccountBtn onClick={() => navigate("/createAccount")}>
+                Join into Shully</CreateAccountBtn>
+            {/* 상기의 setErr 에 값을 세팅해서 err 메세지를 띄운다.*/}
+        {err !== ""? <Error> {err}</Error> : null}
+                {/* <Switcher>
+                    <Link to="/createAccount">Create one &rarr;</Link>
+                </Switcher> */}
+            <GithubBotton/>
+       </ButtonContainer>
     </Wrapper>
     );
 }

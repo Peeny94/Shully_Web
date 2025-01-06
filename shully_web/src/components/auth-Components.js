@@ -19,9 +19,8 @@ export const GlobalStyles = createGlobalStyle`
         margin: 0;
         padding: 0;
         font-family: 'Arial', sans-serif;
-        background-image: url("./styled/imgs/authum.jpg");
         background: linear-gradient(180deg, rgba(67, 221, 216, 0.15) 0%, rgba(244, 249, 253, 0.805) 100%);
-        background-size: cover;
+        /* background-size: cover; */
         overflow-x: hidden; /* 수평 스크롤 제거 */
     }
 `;
@@ -52,7 +51,7 @@ export const Input = styled.input`
     outline-color: rgb(191, 169, 88);
     font-size:16px;
     &[type="submit"] {
-        cursor:url("cursor.cur") 2 2, 
+        cursor:url(${cloudeImage}) 2 2, 
         url("cursor.png") 2 2, 
         pointer;
         &:hover {
@@ -74,19 +73,58 @@ export const LoginButton = styled.button`
     &:hover {
     opacity: 0.8;
     border-color: rgb(191, 169, 88); /* 호버 시 변경 */
+    }
 `;
+// export const CreateAccountBtn = styled.button`
+//   margin-top: 20px;
+//   background-color: rgb(157, 217, 217);
+//   font-weight: 300;
+//   width: 40%;
+//   color: black;
+//   padding: 10px 20px;
+//   border-radius: 50px;
+//   border: 0;
+//   display: inline-block;
+//   gap: 5px;
+//   align-items: center;
+//   justify-content: center;
+//   cursor: pointer;
+//   &:hover {
+//     opacity: 0.8;
+//   }
+// `;
+
+// export const GithubBtn = styled.button`
+//   margin-top: 20px;
+//   background-color: rgb(157, 217, 217);
+//   font-weight: 300;
+//   width: 40%;
+//   color: black;
+//   padding: 10px 20px;
+//   border-radius: 50px;
+//   border: 0;
+//   display: inline-block;
+//   gap: 5px;
+//   align-items: center;
+//   justify-content: center;
+//   cursor: pointer;
+//   &:hover {
+//     opacity: 0.8;
+//   }
+// `;
 export const LoginInput = styled.input`
     padding: 10px 20px;
     border-radius: 50px;
     border: rgb(33, 83, 83);
     background-size: cover;
     background-color: rgb(157, 217, 217);
-    // background-image:url("cloud.jpg");
-    width: 300%; //강의와 다른 설정 (<-100)
+    width: 340%; //강의와 다른 설정 (<-100)
     outline-color: rgb(191, 169, 88);
     font-size:16px;
     &[type="submit"] {
-        cursor:pointer;
+        cursor:url(${cloudeImage}) 2 2, 
+        url("cursor.png") 2 2, 
+        pointer;
         &:hover {
         opacity: 0.8;
         }
@@ -101,7 +139,6 @@ export const LoginTitle = styled.h1`
     text-align: justify;
     color: rgb(147, 117, 117);
     position: relative;; 
-    left: -3.5%;
 `;
 export const Error = styled.span`
     font-weight:600;
@@ -300,68 +337,95 @@ export const ShullyColumn = styled.div`
         place-self: end; 
     }
 `;
+
+// export const ButtonContainer = styled.div`
+//     display: flex;
+//     justify-content: flex-first; /* 버튼을 오른쪽 정렬 */
+//     align-items: center; /* 수직 가운데 정렬 */
+//     margin-top: -10px; /* 버튼 위 여백 추가 */
+//     padding:2px;
+// `;
+// 버튼 컨테이너
 export const ButtonContainer = styled.div`
-    display: flex;
-    justify-content: flex-first; /* 버튼을 오른쪽 정렬 */
-    align-items: center; /* 수직 가운데 정렬 */
-    margin-top: 10px; /* 버튼 위 여백 추가 */
-    padding:2px;
-    overflow: visible; /* 내용 가리기 방지 */
-    z-index: 4s0; /* 버튼이 다른 요소 위에 보이도록 설정 */
+  display: flex;
+  justify-content: flex-start; /* 버튼 정렬: 왼쪽 */
+  align-items: center; /* 수직 가운데 정렬 */
+  gap: 5px; /* 버튼 간격 */
+  margin-top: 5px;
+  padding: 2px;
 `;
 
-export const DeleteButton = styled.button`
-    font-size: 10px;
-    font-weight: 600;
-    color: hsl(248, 69%, 15%,0.4);
-    text-transform: uppercase;
-    background-color: rgba(72, 242, 236, 0.1);
-    padding: 5px 10px;
-    border: 2px solid rgba(72, 242, 236, 0.3);
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    &:hover {
-        background-color: rgba(72, 242, 236, 0.6);
-        border-color: rgb(72, 242, 236, 0.3);
-    }
+// BUTTON component 모음.
+export const BaseloginButton = styled.button`
+  display: inline-block;
+  display: flex;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 50px;
+  background-color: rgb(157, 217, 217);
+  font-size: 16px;
+
+  cursor: pointer;
+  width: 200px; /* 동일한 너비 */
+  height: 50px; /* 동일한 높이 */
+  text-align: center;
+  &:hover {
+    opacity: 0.8;
+    border-color: rgb(191, 169, 88); /* 호버 시 변경 */
+  }
 `;
 
-export const ModifyFileButton =styled.label`
-    background-color: rgba(72, 242, 236, 0.1);  
-    padding: 5px 10px;
-    color: hsl(248, 69%, 15%,0.4);
-    text-transform: uppercase;
-    text-align: center;
-    border-radius: 5px;
-    border: 2px solid rgba(72, 242, 236, 0.3);
-    font-size: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    &:hover {
-        background-color: rgba(72, 242, 236, 0.6);
-        border-color: rgb(72, 242, 236, 0.3);
-    }
-    &:active{
-        opacity: 0.9;
-    }
+export const CreateAccountBtn = styled(BaseloginButton)`
+
+  align-items: center;
+  justify-content: center;
+  color: black;
 `;
-export const ModifyButton = styled.button`
-    font-size: 10px;
-    font-weight: 600;
-    color: hsl(248, 69%, 15%,0.4);
-    text-transform: uppercase;
-    background-color: rgba(72, 242, 236, 0.1);
-    padding: 5px 10px;
-    border: 2px solid rgba(72, 242, 236, 0.3);
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    &:hover {
-        background-color: rgba(72, 242, 236, 0.6);
-        border-color: rgb(72, 242, 236, 0.3);
-    }
+
+export const GithubBtn = styled(BaseloginButton)`
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 `;
+
+// 편집 및 여러 버튼 
+export const BaseeditButton = styled.button`
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 5px 10px; /* 버튼 크기를 동일하게 유지 */
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: rgba(72, 242, 236, 0.1);
+  border: 1px solid rgba(72, 242, 236, 0.3);
+  color: hsl(248, 69%, 15%, 0.4);
+  box-sizing: border-box; /* 모든 버튼의 크기 계산을 통일 */
+  &:hover {
+    background-color: rgba(72, 242, 236, 0.6);
+    border-color: rgba(72, 242, 236, 0.6);
+  }
+`;
+export const DeleteButton = styled(BaseeditButton)`
+  color: hsl(248, 69%, 15%, 0.6); /* Delete에 적합한 강조 색 */
+`;
+
+export const ModifyButton = styled(BaseeditButton)`
+  color: hsl(248, 69%, 15%, 0.6);
+`;
+export const ModifyFileButton = styled(BaseeditButton).attrs({ as: "label" })`
+  /* ModifyFileButton에 BaseeditButton의 border와 일관성 유지 */
+  display: inline-block; /* label을 block처럼 처리 */
+  font-size: 13px;
+  color: hsl(248, 69%, 15%, 0.9);
+  /* border: 1px solid rgba(72, 242, 236, 0.3); */
+  &:hover {
+    background-color: rgba(72, 242, 236, 0.6);
+    border-color: rgba(72, 242, 236, 0.6); /* hover 시 색상도 일관 */
+  }
+`;
+
+// 프로파일 관련 추가 컨포넌트.
 export const ProfileWrapper = styled.div`
     display: flex;
     flex-direction: column;

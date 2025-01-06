@@ -3,7 +3,7 @@ import { auth, db, storage } from "../firebase";
 import { 
     AttachFileInput, ModifyFileButton, ShullyWrapper, 
     ShullyColumn, ShullyPayload, ShullyUsername, EditTextArea,
-    Photo, PhotoBack, DeleteButton, ButtonContainer 
+    Photo, PhotoBack, DeleteButton, ButtonContainer ,ModifyButton
 } from "./auth-Components";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { deleteObject, ref, getDownloadURL, uploadBytes } from "firebase/storage";
@@ -131,12 +131,12 @@ export default function Shully({ username, photo, shully, userid, id }) {
                     <>
                         {isEditing ? (
                             <>
-                                <DeleteButton onClick={updateShully}>
+                                <ModifyButton onClick={updateShully}>
                                 {isUploading ? "Uploading..." : "Save"}
-                                </DeleteButton>
+                                </ModifyButton>
                                 <ModifyFileButton htmlFor="editFile">
                                     {file ? "Photo added ✅" : "Add Photo"}
-                                </ModifyFileButton>
+                                </ModifyFileButton>  
                                 <AttachFileInput
                                     onChange={handleFileChange}
                                     type="file"
@@ -146,7 +146,7 @@ export default function Shully({ username, photo, shully, userid, id }) {
                                 />
                             </>
                         ) : (
-                            <DeleteButton onClick={() => setIsEditing(true)}>Edit</DeleteButton>
+                            <ModifyButton onClick={() => setIsEditing(true)}>Edit</ModifyButton>
                         )}
                         <DeleteButton onClick={() => handleAction("delete")}>Delete</DeleteButton>
                     </>

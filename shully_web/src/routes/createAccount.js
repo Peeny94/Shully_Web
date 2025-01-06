@@ -9,7 +9,7 @@ import {
   Input,
   Switcher,
   Title,
-  Wrapper,
+  Wrapper,ButtonContainer
 } from "../components/auth-Components";
 import GithubBotton from "../components/githubBtn";
 
@@ -126,11 +126,13 @@ export default function CreateAccount() {
           <p>{err}</p>
         </Error>
       )}
+      <ButtonContainer>
       <Switcher>
         Already have an account?
         <Link to="/login"> Log in &rarr;</Link>
       </Switcher>
       <GithubBotton />
+      </ButtonContainer>
     </Wrapper>
   );
 }
