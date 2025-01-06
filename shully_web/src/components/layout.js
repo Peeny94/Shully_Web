@@ -1,4 +1,6 @@
 import {styled} from "styled-components";
+// import shullyIcon from "../styled/imgs/shully1.svg";
+import shullyIcon from "../styled/imgs/shullyStand.svg";
 import { auth } from "../firebase";
 import { Outlet,Link,useNavigate } from "react-router-dom";
 import autossing  from "../styled/imgs/autossing.jpg";//이미지 모듈로 가져오기
@@ -7,18 +9,20 @@ import React from "react";
 
 const Wrapper = styled.div`
     display: grid;
-    gap:50px;
+    gap:20px;
     height: 100%;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 1fr 6fr;
     padding: 50px 0px;
     width:100%;
     max-width: 860px;
 `;
 const Menu = styled.div`
+    background: linear-gradient(180deg, rgba(67, 221, 216, 0.15) 0%, rgba(244, 249, 253, 0.805) 30%);
     display: flex;
+    padding: 15px 0px;
     flex-direction: column;
     align-items: center;
-    gap:20px;
+    gap:30px;
 `;
 const MenuItem = styled.div`
     cursor:pointer;
@@ -56,7 +60,19 @@ const MenuItem = styled.div`
                 opacity: 0.8;
                 border-color: rgb(180, 169, 88,0.5); 
         }
-    }       
+    } 
+    &.shully-icon{
+        width: 50px;
+        height: 50px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;       
+        border-color: rgb(157, 217, 217);
+        &:hover {
+            opacity: 0.8;
+            border-color: rgb(180, 169, 88,0.5); 
+        }
+    }        
 `;
 export default function Layout(){
     const navigate = useNavigate();
@@ -86,6 +102,12 @@ export default function Layout(){
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
   <path fillRule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-5.5-2.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM10 12a5.99 5.99 0 0 0-4.793 2.39A6.483 6.483 0 0 0 10 16.5a6.483 6.483 0 0 0 4.793-2.11A5.99 5.99 0 0 0 10 12Z" clipRule="evenodd" />
 </svg>
+                </MenuItem>
+                </Link>
+                <Link to="profile">
+                <MenuItem className="shully-icon" style={{ backgroundImage: `url(${shullyIcon})` }}>
+{/* ShullyIcon 20*20px */}
+                    {/* <img src={shullyIcon} alt="Shully Icon" />  */}
                 </MenuItem>
                 </Link>
                 

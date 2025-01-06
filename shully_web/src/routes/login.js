@@ -8,7 +8,7 @@ import {
     Form,
     Error,
     LoginButton,LoginInput,LoginTitle,
-    Wrapper,
+    Wrapper,Switcher
   } from "../components/auth-Components";
 import GithubBotton from "../components/githubBtn";
 import React from "react";

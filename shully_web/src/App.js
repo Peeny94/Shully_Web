@@ -13,11 +13,10 @@ import styles from "./styled/blockPage.module.css";
 import { styled } from "styled-components";
 import { GlobalStyles,Wrapper } from './components/auth-Components';
 import LoadingScreen from './components/loadingScreen';
-import ProtectedRoute from "./components/protextedRoute";
+import ProtectedRoute from "./components/protectedRoute";
 
-const AccountCreationDisabled = false; // 계정 생성 차단 여부 플래그
+const AccountCreationDisabled = true; // 계정 생성 차단 여부 플래그
 const AccountCreationNotice = () => (
-
   <div className={styles.blockPage}>
     <h1>계정 생성이 비활성화되었습니다</h1>
     <p>현재 계정 생성 기능은 점검 중입니다. 점검이 완료되면 다시 시도해 주세요.</p>
@@ -28,6 +27,8 @@ const LoginPageWrapper = styled.div`
   height: 100vh;
   display: flex;
   justify-content: center;
+  background-image: url("./styled/imgs/authum.jpg");
+  background: linear-gradient(180deg, rgba(67, 221, 216, 0.15) 0%, rgba(244, 249, 253, 0.805) 100%);
 `;
 const router = createBrowserRouter([
   {

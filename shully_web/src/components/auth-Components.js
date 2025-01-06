@@ -19,6 +19,7 @@ export const GlobalStyles = createGlobalStyle`
         margin: 0;
         padding: 0;
         font-family: 'Arial', sans-serif;
+        background-image: url("./styled/imgs/authum.jpg");
         background: linear-gradient(180deg, rgba(67, 221, 216, 0.15) 0%, rgba(244, 249, 253, 0.805) 100%);
         background-size: cover;
         overflow-x: hidden; /* 수평 스크롤 제거 */
