@@ -14,6 +14,19 @@ import { GlobalStyles } from './components/auth-Components';
 import LoadingScreen from './components/loadingScreen';
 import ProtectedRoute from "./components/protextedRoute";
 
+const AccountCreationDisabled = true; // 계정 생성 차단 여부 플래그
+const AccountCreationNotice = () => (
+  <div>
+    <h1>계정 생성이 비활성화되었습니다</h1>
+    <p>현재 계정 생성 기능은 점검 중입니다. 점검이 완료되면 다시 시도해 주세요.</p>
+    <a href="/">홈으로 돌아가기</a>
+  </div>
+);
+const Wrapper = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+`;
 const router = createBrowserRouter([
   {
     path: "/",
@@ -37,33 +50,24 @@ const router = createBrowserRouter([
       },
     ]
   },
+//계정 생성 및 로그인 차단 기능 추가. 배포 전 추가 유입 금지.(혹시나)
   {
     path: "/login",
     element: <Login />
   },
   {
     path: "/createAccount",
-    element: <CreateAccount />
-  },
+    element: AccountCreationDisabled? (
+      <AccountCreationNotice />
+    ) : (
+      <CreateAccount />)
+    },
   {
     future: {
       v7_relativeSplatPath: true,
     },
   }
 ]);
-
-const AccountCreationNotice = () => (
-  <div>
-    <h1>계정 생성이 비활성화되었습니다</h1>
-    <p>현재 계정 생성 기능은 점검 중입니다. 점검이 완료되면 다시 시도해 주세요.</p>
-    <a href="/">홈으로 돌아가기</a>
-  </div>
-);
-const Wrapper = styled.div`
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-`;
 
 class App extends Component {
   constructor(props) {
