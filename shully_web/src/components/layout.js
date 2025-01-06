@@ -1,8 +1,7 @@
 import {styled} from "styled-components";
 import { auth } from "../firebase";
 import { Outlet,Link,useNavigate } from "react-router-dom";
-import { ScrollImage } from "./cursor";
-import autossing from "../imgs/autossing.jpg"; // 이미지 모듈로 가져오기
+import autossing  from "../styled/imgs/autossing.jpg";//이미지 모듈로 가져오기
 // import { Wrapper } from "./authComponents";
 import React from "react";
 
@@ -71,8 +70,6 @@ export default function Layout(){
     };
     return(
         <Wrapper>
-            {/* alt =placeholder */}
-            <ScrollImage src={autossing} alt="Autossing Image" />
             <Menu>
                 <Link to="/">
                 <MenuItem>

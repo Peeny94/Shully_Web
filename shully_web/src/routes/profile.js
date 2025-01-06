@@ -8,7 +8,7 @@ import {
     UserProfileImageWrapper,
     UserProfileName,GlobalStyles,
 } from "../components/auth-Components";
-import cloudeImage from "../imgs/cloude.jpg";
+import cloudeImage from "../styled/imgs/cloude.jpg";
 import { updateProfile } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { auth, db, storage  } from "../firebase";

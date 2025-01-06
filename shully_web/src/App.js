@@ -1,4 +1,4 @@
-import './App.css';
+import './styled/App.css';
 import { setTimeout } from "react";
 import { auth } from "./firebase";
 import React, { Component } from "react";
@@ -9,20 +9,22 @@ import Profile from "./routes/profile";
 import CreateAccount from "./routes/createAccount";
 import Login from "./routes/login";
 import Content from "./routes/createContents";
-import {  styled } from "styled-components";
-import { GlobalStyles } from './components/auth-Components';
+import styles from "./styled/blockPage.module.css";
+import { styled } from "styled-components";
+import { GlobalStyles,Wrapper } from './components/auth-Components';
 import LoadingScreen from './components/loadingScreen';
 import ProtectedRoute from "./components/protextedRoute";
 
-const AccountCreationDisabled = true; // 계정 생성 차단 여부 플래그
+const AccountCreationDisabled = false; // 계정 생성 차단 여부 플래그
 const AccountCreationNotice = () => (
-  <div>
+
+  <div className={styles.blockPage}>
     <h1>계정 생성이 비활성화되었습니다</h1>
     <p>현재 계정 생성 기능은 점검 중입니다. 점검이 완료되면 다시 시도해 주세요.</p>
-    <a href="/">홈으로 돌아가기</a>
+    <a href="/">login 화면으로 돌아가기</a>
   </div>
 );
-const Wrapper = styled.div`
+const LoginPageWrapper = styled.div`
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -90,10 +92,10 @@ class App extends Component {
     const { isLoading } = this.state;
 
     return (
-      <Wrapper className="App">
+      <LoginPageWrapper className="App">
         <GlobalStyles />
         {isLoading ? <LoadingScreen /> : <RouterProvider router={router} />}
-      </Wrapper>
+      </LoginPageWrapper>
     );
   }
 }

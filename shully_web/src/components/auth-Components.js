@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import React from "react";
 import { createGlobalStyle } from "styled-components";
-import cloudeImage from "../imgs/cloude.jpg";
+import cloudeImage from "../styled/imgs/cloude.jpg";
 import reset from "styled-reset";
 
 export const GlobalStyles = createGlobalStyle`
@@ -20,7 +20,6 @@ export const GlobalStyles = createGlobalStyle`
         padding: 0;
         font-family: 'Arial', sans-serif;
         background: linear-gradient(180deg, rgba(67, 221, 216, 0.15) 0%, rgba(244, 249, 253, 0.805) 100%);
-        background: url(${cloudeImage}) no-repeat center center fixed;
         background-size: cover;
         overflow-x: hidden; /* 수평 스크롤 제거 */
     }
