@@ -1,9 +1,7 @@
-import { useState } from "react";
+import React, { useState } from 'react';
 import { auth, db, storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { serverTimestamp,addDoc, collection, updateDoc } from "firebase/firestore";
-import React from "react";
-// import {styled} from "styled-components";
 import { PostFormWrapper, PostTextArea, PostSubmitBtn, AttachFileButton, AttachFileInput} from "./auth-Components";
 
 
@@ -12,6 +10,8 @@ export default function PostForm(){
     const[shully, setShully] = useState("");
     // const [file, setFile] = useState<File | null>(null); // 해당코드를 바꿔줬다. 
     const[file, setFile] = useState(null);
+
+
     const onChange = (e) => {
         setShully(e.target.value || "");// 문자열 아니면 공백
     };

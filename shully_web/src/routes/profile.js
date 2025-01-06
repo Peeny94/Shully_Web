@@ -6,7 +6,7 @@ import {
     UserProfileImage,
     UserImageUpload,
     UserProfileImageWrapper,
-    UserProfileName,GlobalStyle,
+    UserProfileName,GlobalStyles,
 } from "../components/auth-Components";
 import cloudeImage from "../imgs/cloude.jpg";
 import { updateProfile } from "firebase/auth";
@@ -110,7 +110,7 @@ export default function Profile() {
                 />
             </UserProfileImageWrapper>
             <UserProfileName>{user?.displayName || "Anonymous"}</UserProfileName>
-            <GlobalStyle/>
+            <GlobalStyles/>
             <ShullyList>
                 {shullyForUsers.map((shully)=>(
                     <Shully key ={shully.id} {...shully}/>

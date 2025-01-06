@@ -2,7 +2,13 @@ import { styled } from "styled-components";
 import React from "react";
 import { createGlobalStyle } from "styled-components";
 import cloudeImage from "../imgs/cloude.jpg";
-export const GlobalStyle = createGlobalStyle`
+import reset from "styled-reset";
+
+export const GlobalStyles = createGlobalStyle`
+    ${reset};
+    * {
+    box-sizing: border-box;
+  }
     ::-webkit-scrollbar {
         display: none; /* WebKit 기반 브라우저 */
     }
@@ -13,6 +19,7 @@ export const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
         font-family: 'Arial', sans-serif;
+        background: linear-gradient(180deg, rgba(67, 221, 216, 0.15) 0%, rgba(244, 249, 253, 0.805) 100%);
         background: url(${cloudeImage}) no-repeat center center fixed;
         background-size: cover;
         overflow-x: hidden; /* 수평 스크롤 제거 */
@@ -113,6 +120,11 @@ export const PostFormWrapper = styled.form`
     flex-direction: column;
     gap: 10px;
 `;
+export const ContentFormWrapper = styled.form`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+`;
 // Textarea 에는 박스 크기 조절 기능이 기본적으로 있다.
 export const PostTextArea = styled.textarea`
     border: 2px solid rgb(191, 169, 88, 0.5);
@@ -134,7 +146,7 @@ export const PostTextArea = styled.textarea`
 `;
 
 export const EditTextArea = styled.textarea`
-border: 2px solid rgba(191, 169, 88, 0.5);
+    border: 2px solid rgba(191, 169, 88, 0.5);
     padding: 20px;
     border-radius: 20px;
     font-size: 16px;
@@ -188,7 +200,6 @@ export const PostSubmitBtn = styled.input`
     &:active{
         opacity: 0.9;
     }
-}
 `;
 // HOME STYLE
 
@@ -396,4 +407,67 @@ export const UserImageUpload = styled.input`
 export const UserProfileName = styled.span`
     font-size: 22px;
     font-weight: bold;
+`;
+
+export const PagePreview = styled.div`
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 800px;
+
+        .page {
+            background: rgba(231, 204, 107, 0.5);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 1122px; /* A4 크기 기준 */
+            overflow: hidden; /* 스크롤 제거 */
+            
+            /* 자동 줄바꿈 */
+            white-space: pre-wrap; /* 줄바꿈 포함하여 출력 */
+            word-wrap: break-word; /* 단어가 너무 길면 줄바꿈 */
+            overflow-wrap: break-word; /* 최신 브라우저에서 긴 단어 줄바꿈 */
+            
+            font-family:Arial, Helvetica, sans-serif;
+            font-size: 14px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            font-family:Arial, Helvetica, sans-serif;
+            font-size: 14px;
+        }
+`;
+
+export const AttachContentsButton =styled.label`
+    background-color: rgb(127, 217, 207);
+    padding: 10px 0px;
+    color: white;
+    text-align: center;
+    border-radius: 20px;
+    border: 1px solid rgb(127, 217, 207);
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    &:hover,
+    &:active{
+        opacity: 0.9;
+    }
+`;
+
+
+export const AttachContentsInput = styled.input`
+    display: none;
 `;
