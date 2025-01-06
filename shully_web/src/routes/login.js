@@ -8,7 +8,7 @@ import {
     Form,ButtonContainer,
     Error,
     LoginButton,LoginInput,LoginTitle,CreateAccountBtn,
-    Wrapper,Switcher
+    Wrapper,Switcher,ShullyText
   } from "../components/auth-Components";
 import GithubBotton from "../components/githubBtn";
 import React from "react";
@@ -50,7 +50,10 @@ export default function LoginAccount(){
     }
     return( 
      <Wrapper>
-        <LoginTitle>Login into SHULLY</LoginTitle>      
+            <LoginTitle>
+            Login into{`\n`} 
+            <ShullyText>SHULLY</ShullyText>
+            </LoginTitle>   
         <Form onSubmit ={onSubmit}>
             <LoginInput onChange={onChange} name="email" value = {email} placeholder="Email" type= "email" required/>
             <LoginInput onChange={onChange} name="password" value = {password} placeholder="Password" type= "password" required/>

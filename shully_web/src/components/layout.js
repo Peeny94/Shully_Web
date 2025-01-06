@@ -1,6 +1,6 @@
 import {styled} from "styled-components";
-// import shullyIcon from "../styled/imgs/shully1.svg";
-import shullyIcon from "../styled/imgs/shullyStand.svg";
+import shullyIcon from "../styled/imgs/shully1.svg";
+// import shullyIcon from "../styled/imgs/shullyStand.svg";
 import { auth } from "../firebase";
 import { Outlet,Link,useNavigate } from "react-router-dom";
 import autossing  from "../styled/imgs/autossing.jpg";//이미지 모듈로 가져오기

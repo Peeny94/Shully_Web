@@ -137,8 +137,17 @@ export const Title = styled.h1`
 export const LoginTitle = styled.h1`
     font-size: 42px;
     text-align: justify;
-    color: rgb(147, 117, 117);
-    position: relative;; 
+    color: rgba(157, 217, 217,0.7);
+    position: relative;
+    white-space: pre-line; /* 줄바꿈과 공백을 처리 */
+    padding-left:20px;
+`;
+export const ShullyText = styled.span`
+  font-family:'Dancing Script', cursive;
+  color: rgb(157, 217, 217); /* 색상 변경 */
+  font-size: 60px; /* 부모의 폰트 크기 사용 */
+  font-weight: bold; /* 굵게 */
+  padding-left:100px;
 `;
 export const Error = styled.span`
     font-weight:600;
