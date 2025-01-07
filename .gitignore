@@ -2,3 +2,5 @@
 imgs/
 *.json
 .firebase/
+.firebaserc
+firebase.js
