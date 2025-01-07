@@ -16,6 +16,8 @@ import styles from "./styled/blockPage.module.css";
 import { styled } from "styled-components";
 import { GlobalStyles,Wrapper } from './components/auth-Components';
 import shullyIcon from "./styled/imgs/shullyStand.svg";
+import Monolog from './components/monologForm';
+import MonologPage from './routes/monolog';
 
 const AccountCreationDisabled = true; // 계정 생성 차단 여부 플래그
 
@@ -52,7 +54,11 @@ const router = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: "/createContent",
+        path: "monolog",
+        element: <MonologPage />,
+      },
+      {
+        path: "/createContents",
         element: <Content />
       },
     ]

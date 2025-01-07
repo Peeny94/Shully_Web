@@ -13,7 +13,6 @@ const Log = styled.img`
 `;
 
 const MessageWrapper = styled.div`
-  margin-top: 20px;
   color: red;
   font-size: 14px;
   text-align: center;

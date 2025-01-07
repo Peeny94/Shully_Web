@@ -5,8 +5,8 @@ import {
     ProfileWrapper,
     UserProfileImage,
     UserImageUpload,
-    UserProfileImageWrapper,
-    UserProfileName,GlobalStyles,
+    UserProfileImageWrapper,ButtonContainer,ModifyNameBtn,
+    UserProfileName,GlobalStyles,ModifyInput
 } from "../components/auth-Components";
 import cloudeImage from "../styled/imgs/cloude.jpg";
 import { updateProfile } from "firebase/auth";
@@ -29,22 +29,53 @@ export default function Profile() {
     const user = auth.currentUser;
     const [shullyForUsers, setShullyForUsers] = useState([]); // 사용자 글 상태
     const [userProfile, setUserProfile] = useState(user?.photoURL || cloudeImage); // 프로필 이미지 상태
+    const [name, setName] = useState(user?.displayName ||user.email.split('@')[0]);
     const [isUpdated, setIsUpdated] = useState(false); // 업데이트 알림 상태
+    const [alertMessage, setAlertMessage] = useState("");
+    const [isEditingName, setIsEditingName] = useState(false); 
+
+    const triggerAlert = (message) => {
+        setAlertMessage(message);
+        setIsUpdated(true);
+        setTimeout(() => {
+          setIsUpdated(false);
+        }, 2000); // 3초 후 알림 숨기기
+      };
     
-            const onUserProfileChange = async (e) => {
-                const file = e.target.files[0];
-                if (!file || !user) return;
-                try {
-                    const locationRef = ref(storage, `UserProfiles/${user?.uid}`);
-                    const result = await uploadBytes(locationRef, file);
-                    const UserProfileUrl = await getDownloadURL(result.ref);
-                    setUserProfile(UserProfileUrl);
-                    await updateProfile(user, { photoURL: UserProfileUrl });
-                    window.confirm("Are you sure changed your profile?");
-                } catch (error) {
-                    console.error("Error updating profile:", error);
-                }
-            };
+        const onUserProfileChange = async (e) => {
+            const file = e.target.files[0];
+            if (!file || !user) return;
+            try {
+                const locationRef = ref(storage, `UserProfiles/${user?.uid}`);
+                const result = await uploadBytes(locationRef, file);
+                const UserProfileUrl = await getDownloadURL(result.ref);
+                setUserProfile(UserProfileUrl);
+                await updateProfile(user, { photoURL: UserProfileUrl });
+                window.confirm("Are you sure changed your profile?");
+                triggerAlert("updated successfully!");
+            } catch (error) {
+                console.error("Error updating profile:", error);
+            }
+        };
+        const onUserNameChange = async () => {
+            const nameRegex = /^[a-zA-Z0-9\uAC00-\uD7A3]{1,20}$/; // 영문자와 숫자만 허용, 최대 20글자
+            if (!user) {
+                alert("User not authenticated.");
+                return;
+            }
+            if (!name.trim() || !nameRegex.test(name)) {
+                alert("Name must be alphanumeric and between 1 to 20 characters without spaces or special characters.");
+                return;
+            }
+            try {
+                await updateProfile(user, { displayName: name });
+                alert("Name updated successfully!");
+                setIsEditingName(false); // 편집 모드 종료
+            } catch (error) {
+                console.error("Error updating name:", error);
+                alert("Failed to update name.");
+            }
+        };
         useEffect(() => {        
             const fetchShullys = async() => {
                 if (!user?.uid) {
@@ -109,7 +140,36 @@ export default function Profile() {
                     accept="image/*"
                 />
             </UserProfileImageWrapper>
-            <UserProfileName>{user?.displayName || "Anonymous"}</UserProfileName>
+            {/* 이름 업데이트시 변경해줘야함. */}
+            <UserProfileName>
+            {isEditingName ? (
+                    <>
+                        <ModifyInput
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                        <ButtonContainer>
+                            <ModifyNameBtn onClick={onUserNameChange}>
+                                Update
+                            </ModifyNameBtn>
+                            <ModifyNameBtn onClick={() => setIsEditingName(false)}>
+                                Cancel
+                            </ModifyNameBtn>
+                        </ButtonContainer>
+                    </>
+                ) : (
+                    <>
+                        {name}
+                        <ButtonContainer>
+                            <ModifyNameBtn onClick={() => setIsEditingName(true)}>
+                                Edit
+                            </ModifyNameBtn>
+                        </ButtonContainer>
+                    </>
+                )}
+            </UserProfileName>
+                
             <GlobalStyles/>
             <ShullyList>
                 {shullyForUsers.map((shully)=>(

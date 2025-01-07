@@ -8,7 +8,7 @@ export const GlobalStyles = createGlobalStyle`
     ${reset};
     * {
     box-sizing: border-box;
-  }
+    }
     ::-webkit-scrollbar {
         display: none; /* WebKit 기반 브라우저 */
     }
@@ -25,11 +25,11 @@ export const GlobalStyles = createGlobalStyle`
     }
 `;
 export const Wrapper =styled.div`
-    height: 100%;
+    height: 90%;
     display: flex;
     flex-direction: column;
     width: 420px;
-    padding:50px 0px; 
+    padding:50px 50px; 
 `;
 export const Form = styled.form`
     margin-top: 50px;
@@ -115,39 +115,64 @@ export const LoginButton = styled.button`
 export const LoginInput = styled.input`
     padding: 10px 20px;
     border-radius: 50px;
-    border: rgb(33, 83, 83);
+    border: rgb(191, 169, 88);
     background-size: cover;
     background-color: rgb(157, 217, 217);
     width: 340%; //강의와 다른 설정 (<-100)
-    outline-color: rgb(191, 169, 88);
     font-size:16px;
+    &:focus {
+        background-color: rgba(157, 217, 217, 0.6); /* 포커스 시 배경색 변경 */
+        border-color: rgba(191, 169, 88, 0.18); /* 포커스 시 테두리 색 변경 */
+        transition: background-color 0.3s ease, border-color 0.3s ease; /* 부드러운 전환 */
+    }
     &[type="submit"] {
         cursor:url(${cloudeImage}) 2 2, 
         url("cursor.png") 2 2, 
         pointer;
         &:hover {
         opacity: 0.8;
+        color: black;
+        background-color: rgba(157, 217, 217,0.9);
         }
-    display: flex;
     }
+
 `;
 export const Title = styled.h1`
     font-size:  42px;   
 `;
-export const LoginTitle = styled.h1`
-    font-size: 42px;
-    text-align: justify;
-    color: rgba(157, 217, 217,0.7);
-    position: relative;
-    white-space: pre-line; /* 줄바꿈과 공백을 처리 */
-    padding-left:20px;
+const BaseText = styled.h1`
+  color: rgba(157, 217, 217, 0.7);
+  text-align: justify;
+  position: relative;
+  white-space: pre-line;
+  font-weight: bold;
+
+  @media (max-width: 768px) {
+    font-size: 32px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 24px;
+  }
 `;
-export const ShullyText = styled.span`
-  font-family:'Dancing Script', cursive;
-  color: rgb(157, 217, 217); /* 색상 변경 */
-  font-size: 60px; /* 부모의 폰트 크기 사용 */
-  font-weight: bold; /* 굵게 */
-  padding-left:100px;
+
+export const LoginTitle = styled(BaseText)`
+  font-size: 42px;
+  padding-left: 20px;
+`;
+
+export const ShullyText = styled(BaseText)`
+  font-family: 'Dancing Script', cursive;
+  font-size: 60px;
+  padding-left: 100px;
+
+  @media (max-width: 768px) {
+    font-size: 48px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 36px;
+  }
 `;
 export const Error = styled.span`
     font-weight:600;
@@ -366,26 +391,25 @@ export const ButtonContainer = styled.div`
 
 // BUTTON component 모음.
 export const BaseloginButton = styled.button`
-  display: inline-block;
-  display: flex;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 50px;
-  background-color: rgb(157, 217, 217);
-  font-size: 16px;
-
-  cursor: pointer;
-  width: 200px; /* 동일한 너비 */
-  height: 50px; /* 동일한 높이 */
-  text-align: center;
-  &:hover {
+    margin-top: -10px;
+    display: inline-block;
+    display: flex;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px;
+    background-color: rgb(157, 217, 217);
+    font-size: 16px;
+    cursor: pointer;
+    width: 200px; /* 동일한 너비 */
+    height: 50px; /* 동일한 높이 */
+    text-align: center;
+    &:hover {
     opacity: 0.8;
     border-color: rgb(191, 169, 88); /* 호버 시 변경 */
   }
 `;
 
 export const CreateAccountBtn = styled(BaseloginButton)`
-
   align-items: center;
   justify-content: center;
   color: black;
@@ -394,6 +418,8 @@ export const CreateAccountBtn = styled(BaseloginButton)`
 export const GithubBtn = styled(BaseloginButton)`
   align-items: center;
   justify-content: center;
+  color: black;
+  padding:10px;
   gap: 5px;
 `;
 
@@ -424,14 +450,8 @@ export const ModifyButton = styled(BaseeditButton)`
 `;
 export const ModifyFileButton = styled(BaseeditButton).attrs({ as: "label" })`
   /* ModifyFileButton에 BaseeditButton의 border와 일관성 유지 */
-  display: inline-block; /* label을 block처럼 처리 */
-  font-size: 13px;
-  color: hsl(248, 69%, 15%, 0.9);
-  /* border: 1px solid rgba(72, 242, 236, 0.3); */
-  &:hover {
-    background-color: rgba(72, 242, 236, 0.6);
-    border-color: rgba(72, 242, 236, 0.6); /* hover 시 색상도 일관 */
-  }
+  /* display: inline-block; label을 block처럼 처리 */
+  color: hsl(248, 69%, 15%, 0.6);
 `;
 
 // 프로파일 관련 추가 컨포넌트.
@@ -480,8 +500,48 @@ export const UserImageUpload = styled.input`
 export const UserProfileName = styled.span`
     font-size: 22px;
     font-weight: bold;
+    text-align: center;
+    display: flex;
+    flex-direction: column; /* 버튼과 입력란을 세로로 정렬 */
+    align-items: center; /* 가로 정렬 중앙 */
+    
+`;
+// 뭘 수정하든 이 인풋을 짦은 타이틀이나 제목 부제목 등등 지을 때 쓰자!
+export const ModifyInput = styled.input`
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: 1px rgba(72, 242, 236, 0.1);
+    background-color: rgba(157, 217, 217, 0.1);
+    width: 20ch; /* 20글자 크기에 적합한 너비 */
+    max-width: 300px;
+    margin: 5px auto;
+    font-size: 16px;
+    text-align: left;
+    box-sizing: border-box;
+    &:hover {
+        background-color: rgba(72, 242, 236, 0.1);
+        border-color: rgba(72, 242, 236, 0.5);
+    }
+`;
+export const ModifyNameBtn = styled.button`
+${reset}
+    font-size: 8px;
+    font-weight: 300;
+    text-transform: uppercase;
+    text-align: center;
+    /* padding: 3px 6px; */
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: rgba(72, 242, 236, 0.1);
+    border: 1px solid rgba(72, 242, 236, 0.3);
+    color: hsl(248, 69%, 15%, 0.4);
+    &:hover {
+        background-color: rgba(72, 242, 236, 0.2);
+        border-color: rgba(72, 242, 236, 0.6);
+    }
 `;
 
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2
 export const PagePreview = styled.div`
     margin-top: 20px;
     display: flex;

@@ -62,13 +62,13 @@ export default function LoginAccount(){
         <ButtonContainer>
             <CreateAccountBtn onClick={() => navigate("/createAccount")}>
                 Join into Shully</CreateAccountBtn>
-            {/* 상기의 setErr 에 값을 세팅해서 err 메세지를 띄운다.*/}
-        {err !== ""? <Error> {err}</Error> : null}
                 {/* <Switcher>
                     <Link to="/createAccount">Create one &rarr;</Link>
                 </Switcher> */}
             <GithubBotton/>
        </ButtonContainer>
+ {/* 상기의 setErr 에 값을 세팅해서 err 메세지를 띄운다.*/}
+       {err !== ""? <Error> {err}</Error> : null}
     </Wrapper>
     );
 }
