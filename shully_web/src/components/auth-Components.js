@@ -451,6 +451,7 @@ export const ModifyButton = styled(BaseeditButton)`
 export const ModifyFileButton = styled(BaseeditButton).attrs({ as: "label" })`
   /* ModifyFileButton에 BaseeditButton의 border와 일관성 유지 */
   /* display: inline-block; label을 block처럼 처리 */
+  font-size: 9px;
   color: hsl(248, 69%, 15%, 0.6);
 `;
 
