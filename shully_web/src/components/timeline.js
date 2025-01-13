@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { collection, query, orderBy, limit, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 import Shully from "./shully";
+import Monolog from "./monolog"; // Monolog 컴포넌트 가져오기
 import { HomeWrapper } from "./auth-Components";
 
 export default function Timeline() {

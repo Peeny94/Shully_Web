@@ -30,20 +30,6 @@ export default function Shully({ username, photo, shully, userid, id,createdAt,u
       
         // "YYYY.MM.DD" 형태로 반환
         return `${year}.${month}.${day} ${hours}:${minutes}:${seconds}`;
-      
-        // const date = createdAt.toDate ? createdAt.toDate() : new Date(createdAt);
-      
-        // // 요일과 월을 영어로 변환하기 위한 배열
-        // const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        // const months = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
-      
-        // const dayOfWeek = daysOfWeek[date.getDay()];  // 요일
-        // const month = months[date.getMonth()];        // 월
-        // const day = date.getDate();                   // 일
-        // const year = date.getFullYear();             // 년도
-      
-        // // "Sunday, January 13, 2024" 형태로 반환
-        // return `${dayOfWeek}, ${month} ${day}, ${year}`;
       };
     const handleAction = async (actionType) => {
         const ok = window.confirm(
