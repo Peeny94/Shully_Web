@@ -1,7 +1,6 @@
 import './styled/App.css';
-import { setTimeout } from "react";
 import { auth } from "./firebase";
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from './components/layout';
 import Home from "./routes/home";
@@ -14,9 +13,8 @@ import ProtectedRoute from "./components/protectedRoute";
 
 import styles from "./styled/blockPage.module.css";
 import { styled } from "styled-components";
-import { GlobalStyles,Wrapper } from './components/auth-Components';
+import { GlobalStyles, Wrapper } from './components/auth-Components';
 import shullyIcon from "./styled/imgs/shullyStand.svg";
-import Monolog from './components/monologForm';
 import MonologPage from './routes/monolog';
 
 const AccountCreationDisabled = true; // 계정 생성 차단 여부 플래그
@@ -28,6 +26,7 @@ const AccountCreationNotice = () => (
     <a href="/">login 화면으로 돌아가기</a>
   </div>
 );
+
 const LoginPageWrapper = styled.div`
   height: 100vh;
   display: flex;
@@ -36,6 +35,7 @@ const LoginPageWrapper = styled.div`
     linear-gradient(180deg, rgba(67, 221, 216, 0.15) 0%, rgba(244, 249, 253, 0.805) 100%), /* 배경색 그라데이션 */
     url(${({ image }) => image}) no-repeat 90% 90%; /* 배경 이미지 */
 `;
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -63,18 +63,19 @@ const router = createBrowserRouter([
       },
     ]
   },
-//계정 생성 및 로그인 차단 기능 추가. 배포 전 추가 유입 금지.(혹시나)
+  // 계정 생성 및 로그인 차단 기능 추가. 배포 전 추가 유입 금지.(혹시나)
   {
     path: "/login",
     element: <Login />
   },
   {
     path: "/createAccount",
-    element: AccountCreationDisabled? (
+    element: AccountCreationDisabled ? (
       <AccountCreationNotice />
     ) : (
-      <CreateAccount />)
-    },
+      <CreateAccount />
+    ),
+  },
   {
     future: {
       v7_relativeSplatPath: true,
@@ -92,11 +93,27 @@ class App extends Component {
 
   componentDidMount() {
     this.init();
+    this.preventDragAndDrop();  // 🔥 드래그 앤 드롭 방지 추가
   }
 
+  // Firebase 초기화
   init = async () => {
     await auth.authStateReady();
     this.setState({ isLoading: false });
+  };
+
+  // 🔒 드래그 앤 드롭 방지 함수
+  preventDragAndDrop = () => {
+    const preventDrag = (e) => e.preventDefault();
+
+    window.addEventListener("dragstart", preventDrag);  // 드래그 시작 방지
+    window.addEventListener("drop", preventDrag);       // 드롭 방지
+
+    // 컴포넌트가 해제될 때 리스너 제거
+    window.addEventListener("beforeunload", () => {
+      window.removeEventListener("dragstart", preventDrag);
+      window.removeEventListener("drop", preventDrag);
+    });
   };
 
   render() {

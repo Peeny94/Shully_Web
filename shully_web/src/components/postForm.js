@@ -25,7 +25,7 @@ export default function PostForm(){
     const onSubmit = async(e) => {
         e.preventDefault();
         const user = auth.currentUser;
-        if(!user ||isLoading || shully==="" || shully.length>1800) return;
+        if(!user ||isLoading || shully==="" || shully.length>18000) return;
         try {
             setLoading(true);
             //게시물을 하나의 변수로 명명

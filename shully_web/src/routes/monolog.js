@@ -56,8 +56,9 @@ export default function MonologPage() {
       
 
       <MonologWrapper>
+
         <GlobalStyles />
-            <Monolog /> {/* Monolog 작성 폼 */}
+            <Monolog />
         {monologs.map((monolog) => (
           <div key={monolog.id}>
             <h3>{monolog.username}</h3>

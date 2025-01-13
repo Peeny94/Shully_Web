@@ -21,19 +21,21 @@ export default function Shully({ username, photo, shully, userid, id,createdAt,u
 
         const date = createdAt.toDate ? createdAt.toDate() : new Date(createdAt);
       
-        const year = date.getFullYear();                        // 년도
+        const year = date.getFullYear(); 
         const month = String(date.getMonth() + 1).padStart(2, '0');  // 월 (+1 필요, 0부터 시작)
         const day = String(date.getDate()).padStart(2, '0'); // 일 (01~31)한 자리 수일 때 앞에 0 추가 (01, 02, ...)
+        const hours = String(date.getHours()).padStart(2, '0');      // 시 (00~23)
+        const minutes = String(date.getMinutes()).padStart(2, '0');  // 분 (00~59)
+        const seconds = String(date.getSeconds()).padStart(2, '0');  // 초 (00~59)
       
         // "YYYY.MM.DD" 형태로 반환
-        return `${year}.${month}.${day}`;
+        return `${year}.${month}.${day} ${hours}:${minutes}:${seconds}`;
       
         // const date = createdAt.toDate ? createdAt.toDate() : new Date(createdAt);
       
         // // 요일과 월을 영어로 변환하기 위한 배열
         // const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        // const months = ["January", "February", "March", "April", "May", "June", 
-        //                 "July", "August", "September", "October", "November", "December"];
+        // const months = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
       
         // const dayOfWeek = daysOfWeek[date.getDay()];  // 요일
         // const month = months[date.getMonth()];        // 월
@@ -139,7 +141,8 @@ export default function Shully({ username, photo, shully, userid, id,createdAt,u
         <ShullyWrapper>
             <ShullyColumn>
                 <ShullyUsername>{username}
-                    <p>
+                    <p 
+                    style={{ fontSize: "14px", color: "gray" }}>
                         {formatDate(createdAt)}
                         {createdAt !== updatedAt && updatedAt && `(Edited)`}
                         {/* <p>{createdAt !== updatedAt && updatedAt && `(Edited: ${formatDate(updatedAt)})`}

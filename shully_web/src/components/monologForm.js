@@ -38,8 +38,10 @@ export default function Monolog() {
                 userid: user.uid,
             });
 
-            if (file) {
-                const locationRef = ref(storage, `monologs/${user.uid}/${doc.id}/image`);
+            if (file!==null) {
+                // 경로 수정.
+                const {fileType, setFileType} = e.target.files?.[0]
+                const locationRef = ref(storage, `monologs/${user.uid}/${doc.id}/{fileType}`);
                 const uploadResult = await uploadBytes(locationRef, file);
                 const photoURL = await getDownloadURL(uploadResult.ref);
                 await updateDoc(doc, { photo: photoURL });
@@ -72,7 +74,6 @@ export default function Monolog() {
                 onChange={onChange}
                 placeholder="What is happening?"
             />
-
             <AttachFileButton htmlFor="file">
                 {file ? "Photo added ✅" : "Add photo"}
             </AttachFileButton>
