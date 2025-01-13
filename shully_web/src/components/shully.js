@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { serverTimestamp } from "firebase/firestore";
 import { auth, db, storage } from "../firebase";
 import { 
     AttachFileInput, ModifyFileButton, ShullyWrapper, 
@@ -8,13 +9,40 @@ import {
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { deleteObject, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
-export default function Shully({ username, photo, shully, userid, id }) {
+export default function Shully({ username, photo, shully, userid, id,createdAt,updatedAt }) {
     const user = auth.currentUser;
 
     const [isEditing, setIsEditing] = useState(false); // 편집 모드 상태
     const [editShully, setEditShully] = useState(shully); // 텍스트 상태
     const [file, setFile] = useState(null); // 새로 업로드된 파일 상태
     const [previewURL, setPreviewURL] = useState(photo); // 파일 미리 보기 URL
+    const formatDate = (createdAt) => {
+        if (!createdAt) return "날짜 없음";
+
+        const date = createdAt.toDate ? createdAt.toDate() : new Date(createdAt);
+      
+        const year = date.getFullYear();                        // 년도
+        const month = String(date.getMonth() + 1).padStart(2, '0');  // 월 (+1 필요, 0부터 시작)
+        const day = String(date.getDate()).padStart(2, '0'); // 일 (01~31)한 자리 수일 때 앞에 0 추가 (01, 02, ...)
+      
+        // "YYYY.MM.DD" 형태로 반환
+        return `${year}.${month}.${day}`;
+      
+        // const date = createdAt.toDate ? createdAt.toDate() : new Date(createdAt);
+      
+        // // 요일과 월을 영어로 변환하기 위한 배열
+        // const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        // const months = ["January", "February", "March", "April", "May", "June", 
+        //                 "July", "August", "September", "October", "November", "December"];
+      
+        // const dayOfWeek = daysOfWeek[date.getDay()];  // 요일
+        // const month = months[date.getMonth()];        // 월
+        // const day = date.getDate();                   // 일
+        // const year = date.getFullYear();             // 년도
+      
+        // // "Sunday, January 13, 2024" 형태로 반환
+        // return `${dayOfWeek}, ${month} ${day}, ${year}`;
+      };
     const handleAction = async (actionType) => {
         const ok = window.confirm(
             `Are you sure you want to ${actionType === "delete" ? "delete" : "edit"} this content?`
@@ -58,7 +86,11 @@ export default function Shully({ username, photo, shully, userid, id }) {
     const updateShully = async (e) => {
         e.preventDefault(); // 폼 제출 기본 동작 방지
         setIsUploading(true); // 업로드 상태 시작
-        const updates = { shully: editShully };
+        const updates = { 
+            shully: editShully,
+            // updatedAt: serverTimestamp()
+            updatedAt: Date.now()
+         };
     
         if (!file) {
             console.log("No file provided, updating text only.");
@@ -106,7 +138,14 @@ export default function Shully({ username, photo, shully, userid, id }) {
     return (
         <ShullyWrapper>
             <ShullyColumn>
-                <ShullyUsername>{username}</ShullyUsername>
+                <ShullyUsername>{username}
+                    <p>
+                        {formatDate(createdAt)}
+                        {createdAt !== updatedAt && updatedAt && `(Edited)`}
+                        {/* <p>{createdAt !== updatedAt && updatedAt && `(Edited: ${formatDate(updatedAt)})`}
+                        </p> */}
+                    </p>
+                </ShullyUsername>
                 {isEditing ? (
                     <EditTextArea 
                         value={editShully}
