@@ -3,7 +3,7 @@
 import { useNavigate } from "react-router-dom";
 import PostForm from "../components/postForm";
 import { HomeWrapper,GlobalStyles } from "../components/auth-Components";
-import Timeline from "../components/timeline";
+import Shully from "../components/timelineShully";
 import React from "react";
 export default function Home() {
     const navigate = useNavigate(); // 
@@ -20,7 +20,7 @@ export default function Home() {
         <HomeWrapper>
             <GlobalStyles/>
             <PostForm/>
-            <Timeline />
+            <Shully />
         </HomeWrapper>
     );
 }

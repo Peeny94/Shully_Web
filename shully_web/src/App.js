@@ -7,15 +7,15 @@ import Home from "./routes/home";
 import Profile from "./routes/profile";
 import CreateAccount from "./routes/createAccount";
 import Login from "./routes/login";
-import Content from "./routes/createContents";
+import Content from "./routes/createContent";
 import LoadingScreen from './components/loadingScreen';
 import ProtectedRoute from "./components/protectedRoute";
-
+import Monolog from './routes/shullyMonolog';
 import styles from "./styled/blockPage.module.css";
 import { styled } from "styled-components";
 import { GlobalStyles, Wrapper } from './components/auth-Components';
 import shullyIcon from "./styled/imgs/shullyStand.svg";
-import Monolog from './components/monologForm';
+
 
 const AccountCreationDisabled = true; // 계정 생성 차단 여부 플래그
 
@@ -58,7 +58,7 @@ const router = createBrowserRouter([
         element: <Monolog/>,
       },
       {
-        path: "/createContents",
+        path: "createContents",
         element: <Content />
       },
     ]

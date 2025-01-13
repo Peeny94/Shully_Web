@@ -16,6 +16,7 @@ export default function Shully({ username, photo, shully, userid, id,createdAt,u
     const [editShully, setEditShully] = useState(shully); // 텍스트 상태
     const [file, setFile] = useState(null); // 새로 업로드된 파일 상태
     const [previewURL, setPreviewURL] = useState(photo); // 파일 미리 보기 URL
+    
     const formatDate = (createdAt) => {
         if (!createdAt) return "날짜 없음";
 
