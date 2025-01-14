@@ -312,7 +312,7 @@ export const Photo = styled.img`
 `;
 
 export const PhotoBack = styled.img`
-    width: 100%; /* 부모 컨테이너의 너비에 맞춤 */
+    width: 10%; /* 부모 컨테이너의 너비에 맞춤 */
     height: 220px; /* 부모 컨테이너의 높이에 맞춤 */
     border: 4px solid rgba(191, 169, 88, 0.1); 
     border-radius: 10px;
@@ -371,6 +371,51 @@ export const ShullyColumn = styled.div`
         place-self: end; 
     }
 `;
+// 스타일 정의
+
+export const MonologUsername = styled.span`
+    padding: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    font-style: italic;
+    color:rgba(53, 130, 121);
+`;
+export const MonologPayload = styled.p`
+    padding: 10px;
+    margin: 0px 0px;
+    font-size: 18px;
+    color: rgba(53, 130, 121,0.9);
+    word-wrap: break-word; /* 긴 단어를 줄바꿈 */
+    word-break: break-word; /* 줄바꿈 방지 단어를 강제로 줄바꿈 */
+    overflow-wrap: break-word; /* 긴 텍스트 자동 줄바꿈 */
+    line-height: 1.5; /* 줄 간격 조정 */
+`;
+export const MonologWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+  
+`;
+export const MonologColumn = styled.div`
+    display: grid; /* Grid 컨테이너 설정 */
+    grid-template-rows: 1fr 4fr ;
+    width: 100%;
+    max-width: 600px;
+    /* height: 220px; */
+    justify-items: start;
+    align-items: start; 
+    gap: 10px; /* 요소 간 간격 */
+    border-radius: 10px;
+    overflow-y: scroll;
+    background-color: rgba(72, 242, 236, 0.1);
+    &:last-child {
+        place-self: end; 
+    }
+`;
+
 
 // export const ButtonContainer = styled.div`
 //     display: flex;

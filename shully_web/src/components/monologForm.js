@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { auth, db, storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { serverTimestamp, addDoc, collection, updateDoc } from "firebase/firestore";
+import { addDoc, collection, updateDoc, doc } from "firebase/firestore";
 import { PostFormWrapper, PostTextArea, PostSubmitBtn, AttachFileButton, AttachFileInput } from "./auth-Components";
-// 모놀로그 글 작성 및 경로 생성
+
 export default function MonologPostForm() {
     const [isLoading, setLoading] = useState(false);
     const [monolog, setMonolog] = useState("");
-    const [files, setFiles] = useState([]);
-    const [previewURLs, setPreviewURLs] = useState([]);
+    const [files, setFiles] = useState([]);  // ✅ null → 빈 배열로 초기화
 
     const onChange = (e) => {
         setMonolog(e.target.value || "");
@@ -19,21 +18,17 @@ export default function MonologPostForm() {
         const selectedFiles = Array.from(e.target.files);
 
         const categorizedFiles = selectedFiles.map(file => {
-            const previewURL = URL.createObjectURL(file);
-
             if (file.type.startsWith("image/")) {
-                return { fileType: "photo", file, previewURL };
+                return { fileType: "photo", file };
             } else if (file.type.startsWith("video/")) {
-                return { fileType: "video", file, previewURL };
-            } else {
-                return { fileType: "novel", file, previewURL };
-            }
+                return { fileType: "video", file };
+            } 
         });
 
         setFiles(prev => [...prev, ...categorizedFiles]);
-        setPreviewURLs(prev => [...prev, ...categorizedFiles.map(item => item.previewURL)]);
     };
 
+    // ✅ 파일 업로드 함수 (ArrayBuffer 사용)
     const uploadFileAsArrayBuffer = async (fileRef, file) => {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -57,6 +52,7 @@ export default function MonologPostForm() {
         });
     };
 
+    // ✅ Monolog 업로드
     const onSubmit = async (e) => {
         e.preventDefault();
         const user = auth.currentUser;
@@ -65,39 +61,31 @@ export default function MonologPostForm() {
         try {
             setLoading(true);
 
+            // ✅ Firestore에 Monolog 저장
             const docRef = await addDoc(collection(db, "monologs"), {
                 monolog,
-                createdAt: serverTimestamp(),
+                createdAt: Date.now(),
                 username: user.displayName || "Anonymous",
                 userid: user.uid,
             });
 
-            const uploadPromises = files.map(async ({ fileType, file }) => {
-                let filePath = "";
-
-                if (fileType === "photo") {
-                    filePath = `monologs/${user.uid}/${docRef.id}/photos/${file.name}`;
-                } else if (fileType === "video") {
-                    filePath = `monologs/${user.uid}/${docRef.id}/videos/${file.name}`;
-                } else {
-                    filePath = `monologs/${user.uid}/${docRef.id}/novels/${file.name}`;
-                }
-
+            // ✅ 파일 업로드 처리
+            const uploadPromises = files.flatMap(async ({ fileType, file }) => {
+                let filePath = `monologs/${user.uid}/${docRef.id}/${fileType}/${file.name}`;
                 const fileRef = ref(storage, filePath);
+
                 const fileURL = await uploadFileAsArrayBuffer(fileRef, file);
 
-                await updateDoc(docRef, {
+                // ✅ Firestore 업데이트 (파일 유형별 저장)
+                await updateDoc(doc(db, "monologs", docRef.id), {
                     [`${fileType}`]: fileURL
                 });
             });
 
             await Promise.all(uploadPromises);
 
-            previewURLs.forEach(url => URL.revokeObjectURL(url));
-
             setMonolog("");
             setFiles([]);
-            setPreviewURLs([]);
             alert("Monolog이 성공적으로 업로드되었습니다.");
         } catch (e) {
             console.error("Error posting monolog:", e);
@@ -119,30 +107,15 @@ export default function MonologPostForm() {
             />
 
             <AttachFileButton htmlFor="file">
-                {files.length > 0 ? `${files.length} files added ✅` : "Add files (Photo/Video/Novel)"}
+                {files.length > 0 ? `${files.length} files added ✅` : "Add files (Photo/Video)"}
             </AttachFileButton>
             <AttachFileInput
                 onChange={onFileChange}
                 type="file"
                 id="file"
                 multiple
-                accept="image/*, video/*, application/pdf, .zip, .rar"
+                accept="image/*, video/*, text/*, .zip, .rar"
             />
-
-            {previewURLs.length > 0 && previewURLs.map((url, index) => {
-                const fileType = files[index]?.fileType;
-                return (
-                    <div key={index} style={{ marginTop: "10px" }}>
-                        {fileType === "photo" ? (
-                            <img src={url} alt="Preview" style={{ width: "200px", height: "auto", borderRadius: "10px" }} />
-                        ) : fileType === "video" ? (
-                            <video src={url} controls style={{ width: "200px", borderRadius: "10px" }} />
-                        ) : (
-                            <p>Novel file uploaded</p>
-                        )}
-                    </div>
-                );
-            })}
 
             <PostSubmitBtn
                 type="submit"
