@@ -6,7 +6,7 @@ import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { deleteObject, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import {
   AttachFileInput, ModifyFileButton, MonologColumn,
-  MonologUsername, MonologPayload, EditTextArea,
+  MonologUsername, MonologPayload, EditMoTextArea,
   Photo, PhotoBack, DeleteButton, ButtonContainer, ModifyButton, MonologWrapper
 } from "../components/auth-Components";
 
@@ -162,9 +162,9 @@ export default function MonologPage({ username, mediaFiles = [], monolog, userid
         <p style={{ fontSize: "14px", color: "gray" }}>{formatDate(createdAt)}</p>
         </MonologUsername>
         {isEditing ? (
-          <EditTextArea value={editMonolog} onChange={(e) => setEditMonolog(e.target.value)} onInput={handleInput} />
-        ) : (      <MediaSlider mediaFiles={mediaFiles} />
-          // <MonologPayload>{monolog}</MonologPayload>
+          <EditMoTextArea value={editMonolog} onChange={(e) => setEditMonolog(e.target.value)} onInput={handleInput} />
+        ) : (   
+          <MonologPayload>{monolog}</MonologPayload>
         )}
         
         <ButtonContainer>
@@ -191,7 +191,7 @@ export default function MonologPage({ username, mediaFiles = [], monolog, userid
           </>
         )}
       </ButtonContainer>
-
+      <Photo></Photo>
       </MonologColumn>
     </MonologWrapper>
   );

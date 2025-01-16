@@ -391,17 +391,29 @@ export const MonologPayload = styled.p`
     line-height: 1.5; /* 줄 간격 조정 */
 `;
 export const MonologWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  padding: 20px;
-  box-sizing: border-box;
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 4fr 3fr;
+    padding:10px;
+    width: 100%; /* 고정된 가로 길이 */
+    min-height: 280px; /* 최소 높이 */
+    overflow: hidden; /* 내부 내용이 넘칠 경우 숨김 */
+    padding-top: 60px;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+    border :1px solid rgb(191, 169, 88, 0.5); 
+    border-radius: 15px;
+    background: linear-gradient(90deg, rgb(127, 217, 207, 0.4) 0%, rgba(244, 249, 253, 1) 100%); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    &:hover {
+        transform: translateY(-1px); /* 살짝 떠오르는 효과 */
+        border :1.3px solid rgb(201, 180, 188);
+    }
   
 `;
 export const MonologColumn = styled.div`
     display: grid; /* Grid 컨테이너 설정 */
-    grid-template-rows: 1fr 4fr ;
+    grid-template-rows: 1fr 3fr ;
     width: 100%;
     max-width: 600px;
     /* height: 220px; */
@@ -415,7 +427,29 @@ export const MonologColumn = styled.div`
         place-self: end; 
     }
 `;
-
+export const EditMoTextArea = styled.textarea`
+    border: 2px solid rgba(191, 169, 88, 0.5);
+    /* padding: 20px; */
+    border-radius: 20px;
+    font-size: 16px;
+    color: black;
+    background-color: rgba(255, 245, 250, 0.8);
+    width: 80%;
+    resize: none;
+    min-height: 40px; /* 최소 높이 */
+    max-height: 300px; /* 최대 높이 */
+    height: auto;
+    overflow: hidden; /* 스크롤 막기 */
+    box-sizing: border-box; /* 패딩 포함 높이 계산 */
+    &::placeholder {
+        font-size: 1rem;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    &:focus {
+        outline: none;
+        border-color: rgb(191, 169, 88);
+    }
+`;
 
 // export const ButtonContainer = styled.div`
 //     display: flex;
