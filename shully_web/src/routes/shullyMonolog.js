@@ -7,12 +7,13 @@ import Monolog from "../components/monolog";
 import MonologPostForm from "../components/monologForm";
 
 // 스타일 컴포넌트
-const Wrapper = styled.div`
-    height: 90%;
+const MoWrapper = styled.div`
+    height: 100%;
     display: flex;
     flex-direction: column;
-    width: 600px;
-    padding: 50px 50px;
+    justify-content: flex-start;
+    max-width: 700px;
+    padding: 10px 50px;
 `;
 
 // ✅ Monolog Timeline 컴포넌트
@@ -42,7 +43,7 @@ export default function MonologTimeline() {
     }, []);
 
     return (
-        <Wrapper>
+        <MoWrapper>
             <GlobalStyles />
             {/* ✅ 작성 폼 */}
             <MonologPostForm />
@@ -61,6 +62,6 @@ export default function MonologTimeline() {
                     id={monolog.id}
                 />
             ))}
-        </Wrapper>
+        </MoWrapper>
     );
 }

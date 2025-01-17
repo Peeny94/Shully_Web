@@ -4,25 +4,25 @@ import shullyIcon from "../styled/imgs/shully1.svg";
 import { auth } from "../firebase";
 import { Outlet,Link,useNavigate } from "react-router-dom";
 import autossing  from "../styled/imgs/autossing.jpg";//이미지 모듈로 가져오기
-// import { Wrapper } from "./authComponents";
+import { LayoutWrapper } from "./auth-Components";
 import React from "react";
 
-const Wrapper = styled.div`
-    display: grid;
-    gap:20px;
-    height: 100%;
-    grid-template-columns: 1fr 6fr;
-    padding: 50px 0px;
-    width:100%;
-    max-width: 860px;
-`;
+// const Wrapper = styled.div`
+//     display: flex;
+//     justify-content: center;
+//     gap:20px;
+//     height: 100%;
+//     padding: 50px 10px;
+//     width:100%;
+//     /* max-width: 1020px; */
+// `;
 const Menu = styled.div`
-    background: linear-gradient(180deg, rgba(67, 221, 216, 0.15) 0%, rgba(244, 249, 253, 0.805) 30%);
+    background: linear-gradient(180deg, rgba(67, 221, 216, 0.15) 5%, rgba(244, 249, 253, 0.805) 21%);
     display: flex;
-    padding: 15px 0px;
+    padding: 40px 0px;
     flex-direction: column;
     align-items: center;
-    gap:30px;
+    gap:20px;
 `;
 const MenuItem = styled.div`
     cursor:pointer;
@@ -85,7 +85,7 @@ export default function Layout(){
         }
     };
     return(
-        <Wrapper>
+        <LayoutWrapper>
             <Menu>
                 <Link to="/">
                 <MenuItem>
@@ -127,6 +127,6 @@ export default function Layout(){
                 </MenuItem>
             </Menu>
             <Outlet/>
-        </Wrapper>
+        </LayoutWrapper>
     );
 }

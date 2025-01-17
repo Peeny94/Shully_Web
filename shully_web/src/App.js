@@ -7,7 +7,7 @@ import Home from "./routes/home";
 import Profile from "./routes/profile";
 import CreateAccount from "./routes/createAccount";
 import Login from "./routes/login";
-import Content from "./routes/createContent";
+import Content from "./routes/createContents";
 import LoadingScreen from './components/loadingScreen';
 import ProtectedRoute from "./components/protectedRoute";
 import Monolog from './routes/shullyMonolog';

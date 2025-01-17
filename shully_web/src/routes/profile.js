@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Shully from "../components/shully";
+import Slider from "../components/slider-Component"; 
 import {
-    ProfileWrapper,
-    UserProfileImage,
-    UserImageUpload,
+    ProfileWrapper,Photo,ShullyPayload,
+    UserProfileImage, ShullyUserWrapper,ShullyUserColumn,
+    UserImageUpload,HomeWrapper,ProfilePhoto,ProfileVideo,ProfileMediaContainer ,
     UserProfileImageWrapper,ButtonContainer,ModifyNameBtn,
-    UserProfileName,GlobalStyles,ModifyInput
+    UserProfileName,GlobalStyles,ModifyInput, ShullyUsername
 } from "../components/auth-Components";
 import cloudeImage from "../styled/imgs/cloude.jpg";
 import { updateProfile } from "firebase/auth";
@@ -14,16 +15,6 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { auth, db, storage  } from "../firebase";
 import { collection, limit, orderBy, query, where, onSnapshot, setDoc,getDocs,doc} from "firebase/firestore";
 
-const ShullyList = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-arrs: stretch; /* 자식 요소가 부모의 너비/높이에 맞춤 */
-    justify-content: flex-start; /* 내용이 위쪽에 정렬 */
-    gap: 20px;
-    padding: 10px; /* 내부 여백 추가 */
-    box-sizing: border-box; /* 패딩 포함 크기 계산 */
-    // margin: 20px 0; Wrapper 요소 사이의 외부 여백
-`;
 
 export default function Profile() {
     const user = auth.currentUser;
@@ -159,6 +150,7 @@ export default function Profile() {
   }, []);
 
    return (
+
        <ProfileWrapper>
            <UserProfileImageWrapper htmlFor="userProfile">
                <UserProfileImage
@@ -201,24 +193,34 @@ export default function Profile() {
                    </>
                )}
            </UserProfileName>
-               
-           <GlobalStyles/>
-           <ShullyList>
-               {shullyProfileUsers.map((arr)=>(
-                <div key={arr.id} >
-                    <h4>{arr.username} - {arr.source === "shully" ? "Shully Post" : "Monolog Post"}</h4>
-                    <p>{arr.content}</p>
-                    {arr.photo && <img src={arr.photo} alt="Uploaded" />}
-                    {arr.video && (
-                        <video controls style={{ width: "100%" }}>
-                            <source src={arr.video} type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                    )}
-                    <small>{new Date(arr.createdAt).toLocaleString()}</small>
-                </div>
-            ))}
-           </ShullyList>
-       </ProfileWrapper>
+ 
+               {shullyProfileUsers.map((p)=>{
+                    const mediaItems =[];
+                    if(p.photo) mediaItems.push({type: "image", src: p.photo});
+                    if(p.video) mediaItems.push({type:"video", src: p.video});
+                    return(
+                        <ShullyUserWrapper key={p.id}>
+                            <ShullyUserColumn >
+                                <ShullyUsername>{p.username}
+                                    <p style={{ fontSize: "14px", color: "gray" }}>
+                                    {new Date(p.createdAt).toLocaleString()}
+                                    </p>
+                                </ShullyUsername>                   
+                                <ShullyPayload>
+                                    {p.content}
+                                </ShullyPayload>
+                                {/* <ProfilePhoto src={p.photo} alt = "profile-photo"/>
+                                <ProfileVideo src={p.video} type="video/mp4" alt = "profile-video"/> */}
+                                <Slider items={mediaItems}/>
+                            </ShullyUserColumn>
+                            <p style={{ fontSize: "14px", color: "gray" }}>
+                            {p.source === "shully" ? "source: 'Shully'" : "source: 'Monolog'"}
+                            </p>
+                    </ShullyUserWrapper>
+                    
+            );
+        })}
+            <GlobalStyles/>
+        </ProfileWrapper> 
    );
 }
