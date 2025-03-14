@@ -32,7 +32,7 @@ export default function PostForm(){
            const doc = await addDoc(collection(db, "shullys"),{
                 shully,
                 createdAt: Date.now(),
-                username: user.displayName || "Anonymous",
+                username: user.displayName ||user.email.split('@')[0],
                 userid: user.uid,
             });
             //파일이 있을경우 파일을 추가하는 코드.

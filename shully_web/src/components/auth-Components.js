@@ -225,7 +225,7 @@ export const PostFormWrapper = styled.form`
     gap: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
-    width: 70%;
+    width: 100%;
 `;
 export const ContentFormWrapper = styled.form`
     display: flex;
@@ -377,7 +377,35 @@ export const Photo = styled.img`
 `;
 
 export const PhotoBack = styled.img`
-    width: 10%; /* 부모 컨테이너의 너비에 맞춤 */
+    width: 100%; /* 부모 컨테이너의 너비에 맞춤 */
+    height: 220px; /* 부모 컨테이너의 높이에 맞춤 */
+    border: 4px solid rgba(191, 169, 88, 0.1); 
+    border-radius: 10px;
+    object-fit: scale-down; /* 이미지를 박스에 맞춤 */
+    opacity: 0.2; /* 불투명도 조정 */
+
+`;
+export const MonologImageContainer = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+export const MoPhoto = styled.img`
+    width: 100%; /* 부모 컨테이너의 너비에 맞춤 */
+    height: 220px; /* 부모 컨테이너의 높이에 맞춤 */
+    padding: 1px 1px;
+    object-fit: fit;
+    border-radius: 10px;
+    border: 1px solid rgba(191, 169, 88, 0.5); 
+    &:hover {
+        transform: translateY(-1px); /* 살짝 떠오르는 효과 */
+        border :1.3px solid rgb(201, 180, 188, 0.5);
+    }
+`;
+
+export const MoPhotoBack = styled.img`
+    width: 100%; /* 부모 컨테이너의 너비에 맞춤 */
     height: 220px; /* 부모 컨테이너의 높이에 맞춤 */
     border: 4px solid rgba(191, 169, 88, 0.1); 
     border-radius: 10px;
@@ -436,7 +464,7 @@ export const MonologColumn = styled.div`
     grid-template-rows: auto 1fr; ;
     width: 100%;
     max-width: 500px;
-    height: 250px;
+    height: 190px;
     justify-items: start;
     align-items: start; 
     gap: 10px; /* 요소 간 간격 */
@@ -461,27 +489,46 @@ export const MonologColumn = styled.div`
     }
 `;
 export const MonologPayload = styled.p`
-    padding: 10px;
-    margin: 0px 0px;
-    font-size: 18px;
+    padding: 0px;
+    margin: 5px 10px;
+    font-size: 16px;
     color: rgba(53, 130, 121,0.9);
     word-wrap: break-word; /* 긴 단어를 줄바꿈 */
     word-break: break-word; /* 줄바꿈 방지 단어를 강제로 줄바꿈 */
     overflow-wrap: break-word; /* 긴 텍스트 자동 줄바꿈 */
     line-height: 1.5; /* 줄 간격 조정 */
+    /* 🔥 두 줄까지만 표시하고 이후 내용은 스크롤 */
+    max-height: 3em; /* 2줄까지만 표시 (line-height * 2) */
+    overflow-y: auto;
+    white-space: pre-wrap; /* 줄바꿈 적용 */
+    
+    /* 🔽 스크롤바 스타일 */
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+    }
+    &::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
 `;
 
 export const EditMoTextArea = styled.textarea`
     border: 2px solid rgba(191, 169, 88, 0.5);
-    /* padding: 20px; */
+    margin: 8px 5px;
+    /* align-items: center; */
+    /* justify-content: center; */
+    padding: 15px 10px;
     border-radius: 20px;
     font-size: 16px;
     color: black;
     background-color: rgba(255, 245, 250, 0.8);
-    width: 80%;
+    width: 98%;
     resize: none;
-    min-height: 40px; /* 최소 높이 */
-    max-height: 300px; /* 최대 높이 */
+    min-height: 20px; /* 최소 높이 */
+    max-height: 220px; /* 최대 높이 */
     height: auto;
     overflow: hidden; /* 스크롤 막기 */
     box-sizing: border-box; /* 패딩 포함 높이 계산 */
@@ -540,11 +587,12 @@ export const GithubBtn = styled(BaseloginButton)`
 
 // 편집 및 여러 버튼 
 export const BaseeditButton = styled.button`
-  font-size: 10px;
-  font-weight: 600;
+  font-size: 7px;
+  font-weight: 400;
   text-transform: uppercase;
   text-align: center;
-  padding: 5px 10px; /* 버튼 크기를 동일하게 유지 */
+  height: 20px;
+  padding:0px 10px; //버튼 크기를 동일하게 유지
   border-radius: 5px;
   cursor: pointer;
   background-color: rgba(72, 242, 236, 0.1);
@@ -563,11 +611,52 @@ export const DeleteButton = styled(BaseeditButton)`
 export const ModifyButton = styled(BaseeditButton)`
   color: hsl(248, 69%, 15%, 0.6);
 `;
+// export const ModifyFileButton = styled(BaseeditButton).attrs({ as: "label" })`
+//   /* ModifyFileButton에 BaseeditButton의 border와 일관성 유지 */
+//   display: inline-block; //label을 block처럼 처리
+//   text-align: center;
+//   color: hsl(248, 69%, 15%, 0.6);
+//   /* background-color: #f4f4f4; */
+//   background-size: 5px 5px;
+//   background-image: url("../styled/imgs/attachfileBtn.svg");
+// `;
 export const ModifyFileButton = styled(BaseeditButton).attrs({ as: "label" })`
-  /* ModifyFileButton에 BaseeditButton의 border와 일관성 유지 */
-  /* display: inline-block; label을 block처럼 처리 */
-  font-size: 9px;
-  color: hsl(248, 69%, 15%, 0.6);
+    cursor:pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgb(157, 217, 217, 0.7);
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    svg{
+        width: 30px;
+        fill: rgb(157, 217, 217);
+        border-color: rgb(157, 217, 217);
+        }
+    &:hover {
+        opacity: 0.8;
+        border-color: rgb(180, 169, 88, 0.5); 
+        &.log-out{
+            fill: rgb(157, 217, 217);
+            border-color: rgb(157, 217, 217);
+            svg{
+                fill: brown;
+            }
+        } 
+    }
+    &.shully-icon{
+        width: 50px;
+        height: 50px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;       
+        border-color: rgb(157, 217, 217);
+        &:hover {
+            opacity: 0.8;
+            border-color: rgb(180, 169, 88,0.5); 
+        }
+    }        
 `;
 
 // 프로파일 관련 추가 컨포넌트.
