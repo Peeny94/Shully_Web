@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import shullyIcon from "../styled/imgs/shully1.svg";
 import attachfileBtn from "../styled/imgs/attachfileBtn.svg";
 import { auth, db, storage } from "../firebase";
 import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
@@ -11,7 +12,56 @@ import {
 } from "../components/auth-Components";
 import Slider from "./slider-Component";
 
-
+const MenuItem = styled.div`
+    cursor:pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgb(157, 217, 217, 0.7);
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    svg{
+        width: 30px;
+        fill: rgb(157, 217, 217);
+        border-color: rgb(157, 217, 217);
+        }
+    &:hover {
+        opacity: 0.8;
+        border-color: rgb(180, 169, 88, 0.5); 
+        &.log-out{
+            fill: rgb(157, 217, 217);
+            border-color: rgb(157, 217, 217);
+            svg{
+                fill: brown;
+            }
+        } 
+    }
+    &.content-icon{       
+            border-color: rgb(157, 217, 217);
+            svg{
+                fill: none;
+                stroke: rgb(157, 217, 217);
+                stroke-width: 3; /* 선 두께 조정 */ 
+            } 
+            &:hover {
+                opacity: 0.8;
+                border-color: rgb(180, 169, 88,0.5); 
+        }
+    } 
+    &.shully-icon{
+        width: 50px;
+        height: 50px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;       
+        border-color: rgb(157, 217, 217);
+        &:hover {
+            opacity: 0.8;
+            border-color: rgb(180, 169, 88,0.5); 
+        }
+    }        
+`;
 
 // MonologPage 컴포넌트
 export default function MonologPage({id, userid,createdAt, monolog, updatedAt, username,photo }) {
