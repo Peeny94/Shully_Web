@@ -1,0 +1,14 @@
+*.md
+imgs/
+*.json
+.firebase/
+.firebaserc
+*.js
+
+# dependencies
+node_modules/
+# db web 정보
+.firebase.js
+*.json
+node_modules/
+squlite/
