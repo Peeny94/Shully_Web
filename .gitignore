@@ -1,9 +1,0 @@
-이론.md
-imgs/
-*.json
-.firebase/
-.firebaserc
-*.js
-
-# dependencies
-*/node_modules
