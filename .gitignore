@@ -4,3 +4,6 @@ imgs/
 .firebase/
 .firebaserc
 *.js
+
+# dependencies
+*/node_modules
