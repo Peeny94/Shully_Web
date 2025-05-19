@@ -1,4 +1,5 @@
-*.md
+sql.md
+envs.md
 imgs/
 *.json
 .firebase/
@@ -12,3 +13,5 @@ node_modules/
 *.json
 node_modules/
 squlite/
+openssl-3.0.12/
+shully310/
